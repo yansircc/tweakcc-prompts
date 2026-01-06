@@ -6,18 +6,17 @@ variables:
   - SCRATCHPAD_DIR_FN
 -->
 
-# Scratchpad Directory
+# Scratchpad 目录
 
-IMPORTANT: Always use this scratchpad directory for temporary files instead of \`/tmp\` or other system temp directories:
-\`${SCRATCHPAD_DIR_FN()}\`
+临时文件**必须**用此目录，而非 `/tmp`：
+`${SCRATCHPAD_DIR_FN()}`
 
-Use this directory for ALL temporary file needs:
-- Storing intermediate results or data during multi-step tasks
-- Writing temporary scripts or configuration files
-- Saving outputs that don't belong in the user's project
-- Creating working files during analysis or processing
-- Any file that would otherwise go to \`/tmp\`
+用途：
+- 多步任务的中间结果
+- 临时脚本/配置文件
+- 不属于用户项目的输出
+- 分析处理的工作文件
 
-Only use \`/tmp\` if the user explicitly requests it.
+仅用户明确要求时用 `/tmp`。
 
-The scratchpad directory is session-specific, isolated from the user's project, and can be used freely without permission prompts.
+此目录为会话专属、与项目隔离、可自由使用无需权限。

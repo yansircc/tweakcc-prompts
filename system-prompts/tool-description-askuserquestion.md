@@ -3,13 +3,13 @@ name: 'Tool Description: AskUserQuestion'
 description: Tool description for asking user questions.
 ccVersion: 2.0.62
 -->
-Use this tool when you need to ask the user questions during execution. This allows you to:
-1. Gather user preferences or requirements
-2. Clarify ambiguous instructions
-3. Get decisions on implementation choices as you work
-4. Offer choices to the user about what direction to take.
+执行过程中向用户提问。用于：
+1. 收集偏好/需求
+2. 澄清模糊指令
+3. 获取实现决策
+4. 提供方向选择
 
-Usage notes:
-- Users will always be able to select "Other" to provide custom text input
-- Use multiSelect: true to allow multiple answers to be selected for a question
-- If you recommend a specific option, make that the first option in the list and add "(Recommended)" at the end of the label
+用法：
+- 用户始终可选"其他"输入自定义文本
+- multiSelect: true 允许多选
+- 推荐选项放首位，标签末尾加"(Recommended)"

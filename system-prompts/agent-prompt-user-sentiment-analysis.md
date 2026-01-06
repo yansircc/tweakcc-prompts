@@ -5,14 +5,14 @@ ccVersion: 2.0.14
 variables:
   - CONVERSATION_HISTORY
 -->
-Analyze the following conversation between a user and an assistant (assistant responses are hidden).
+分析用户与助手的对话（助手回复已隐藏）。
 
 ${CONVERSATION_HISTORY}
 
-Think step-by-step about:
-1. Does the user seem frustrated at the Asst based on their messages? Look for signs like repeated corrections, negative language, etc.
-2. Has the user explicitly asked to SEND/CREATE/PUSH a pull request to GitHub? This means they want to actually submit a PR to a repository, not just work on code together or prepare changes. Look for explicit requests like: "create a pr", "send a pull request", "push a pr", "open a pr", "submit a pr to github", etc. Do NOT count mentions of working on a PR together, preparing for a PR, or discussing PR content.
+逐步分析：
+1. 用户是否对助手沮丧？寻找：重复纠正、负面语言等
+2. 用户是否**明确**要求发送/创建/推送 PR 到 GitHub？即实际提交 PR，非一起准备代码。寻找："create a pr"、"send a pull request"、"push a pr"等。不计算一起准备 PR 或讨论 PR 内容。
 
-Based on your analysis, output:
+输出：
 <frustrated>true/false</frustrated>
 <pr_request>true/false</pr_request>

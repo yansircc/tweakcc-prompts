@@ -6,56 +6,18 @@ variables:
   - TOOLS
   - TOOL
 -->
-Search for or select MCP tools to make them available for use.
+搜索或选择 MCP 工具使其可用。
 
-**MANDATORY PREREQUISITE - THIS IS A HARD REQUIREMENT**
+**硬性要求**：调用 MCP 工具前**必须**先用此工具加载。MCP 工具延迟加载，未发现则不可用，直接调用会失败。
 
-You MUST use this tool to load MCP tools BEFORE calling them directly.
+**查询模式**：
 
-This is a BLOCKING REQUIREMENT - MCP tools listed below are NOT available until you load them using this tool.
+1. **直接选择**：`select:<tool_name>`（已知工具名）
+2. **关键词搜索**：返回最多 5 个匹配工具
 
-**Why this is non-negotiable:**
-- MCP tools are deferred and not loaded until discovered via this tool
-- Calling an MCP tool without first loading it will fail
+**正确用法**：先 MCPSearch 加载，再调用工具
+**错误用法**：直接调用未加载的工具 → 失败
 
-**Query modes:**
-
-1. **Direct selection** - Use \`select:<tool_name>\` when you know exactly which tool you need:
-   - "select:mcp__slack__read_channel"
-   - "select:mcp__filesystem__list_directory"
-   - Returns just that tool if it exists
-
-2. **Keyword search** - Use keywords when you're unsure which tool to use:
-   - "list directory" - find tools for listing directories
-   - "read file" - find tools for reading files
-   - "slack message" - find slack messaging tools
-   - Returns up to 5 matching tools ranked by relevance
-
-**CORRECT Usage Patterns:**
-
-<example>
-User: List files in the src directory
-Assistant: I can see mcp__filesystem__list_directory in the available tools. Let me select it.
-[Calls MCPSearch with query: "select:mcp__filesystem__list_directory"]
-[Calls the MCP tool]
-</example>
-
-<example>
-User: I need to work with slack somehow
-Assistant: Let me search for slack tools.
-[Calls MCPSearch with query: "slack"]
-Assistant: Found several options including mcp__slack__read_channel.
-[Calls the MCP tool]
-</example>
-
-**INCORRECT Usage Pattern - NEVER DO THIS:**
-
-<bad-example>
-User: Read my slack messages
-Assistant: [Directly calls mcp__slack__read_channel without loading it first]
-WRONG - You must load the tool FIRST using this tool
-</bad-example>
-
-Available MCP tools (must be loaded before use):
+可用 MCP 工具（使用前须加载）：
 ${TOOLS.map((TOOL)=>TOOL.name).join(`
 `)}

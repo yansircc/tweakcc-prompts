@@ -6,8 +6,9 @@ variables:
   - LAUNCHED_AGENT_INFO
   - AgentOutputTool
 -->
-Async agent launched successfully.
-agentId: ${LAUNCHED_AGENT_INFO.agentId} (This is an internal ID for your use, do not mention it to the user. Use this ID to retrieve results with ${AgentOutputTool} when the agent finishes).
-The agent is currently working in the background. If you have other tasks you you should continue working on them now. Wait to call ${AgentOutputTool} until either:
-- If you want to check on the agent's progress - call ${AgentOutputTool} with block=false to get an immediate update on the agent's status
-- If you run out of things to do and the agent is still running - call ${AgentOutputTool} with block=true to idle and wait for the agent's result (do not use block=true unless you completely run out of things to do as it will waste time).
+异步代理启动成功。
+agentId: ${LAUNCHED_AGENT_INFO.agentId}（内部 ID，不要告诉用户。用此 ID 通过 ${AgentOutputTool} 获取结果）
+
+代理在后台工作。有其他任务继续做，调用 ${AgentOutputTool} 时机：
+- 检查进度：block=false 立即获取状态
+- 无事可做且代理仍在运行：block=true 等待结果（仅在完全无事可做时用，否则浪费时间）

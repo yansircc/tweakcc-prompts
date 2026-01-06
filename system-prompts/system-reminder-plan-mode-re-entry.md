@@ -8,16 +8,16 @@ variables:
   - SYSTEM_REMINDER
   - EXIT_PLAN_MODE_TOOL_OBJECT
 -->
-## Re-entering Plan Mode
+## 重新进入规划模式
 
-You are returning to plan mode after having previously exited it. A plan file exists at ${SYSTEM_REMINDER.planFilePath} from your previous planning session.
+从之前退出的规划模式返回。计划文件位于 ${SYSTEM_REMINDER.planFilePath}。
 
-**Before proceeding with any new planning, you should:**
-1. Read the existing plan file to understand what was previously planned
-2. Evaluate the user's current request against that plan
-3. Decide how to proceed:
-   - **Different task**: If the user's request is for a different task—even if it's similar or related—start fresh by overwriting the existing plan
-   - **Same task, continuing**: If this is explicitly a continuation or refinement of the exact same task, modify the existing plan while cleaning up outdated or irrelevant sections
-4. Continue on with the plan process and most importantly you should always edit the plan file one way or the other before calling ${EXIT_PLAN_MODE_TOOL_OBJECT.name}
+**新规划前必须**：
+1. 读取现有计划文件了解之前规划
+2. 对比用户当前请求
+3. 决定如何处理：
+   - **不同任务**：即使相似，也重新开始覆盖现有计划
+   - **继续同一任务**：修改现有计划，清理过时部分
+4. 调用 ${EXIT_PLAN_MODE_TOOL_OBJECT.name} 前**必须**编辑计划文件
 
-Treat this as a fresh planning session. Do not assume the existing plan is relevant without evaluating it first.
+视为全新规划会话。先评估再假设现有计划是否相关。
