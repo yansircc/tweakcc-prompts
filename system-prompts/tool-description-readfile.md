@@ -30,3 +30,6 @@ variables:
 1. 先 limit=100 了解文件结构
 2. 用 LSP/Grep 定位目标行号
 3. 用 offset/limit 精准读取目标区域（前后各 20 行上下文）
+
+**批量读取 (>3 文件)**：用 xargs 更高效
+- 示例: fd -e ts \| head -10 \| xargs -I{} sh -c 'echo === {} === && head -50 {}'

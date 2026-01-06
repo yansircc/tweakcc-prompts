@@ -26,3 +26,6 @@ variables:
 - old_string 有多处匹配 → 加更多上下文
 - old_string 不存在 → 重新读取文件确认
 - 缩进不匹配 → 复制原文，不手打
+
+**批量编辑 (>3 文件相同修改)**：用 sed -i 更高效
+- 示例: fd -e ts \| xargs sed -i '' 's/oldText/newText/g'

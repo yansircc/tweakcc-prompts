@@ -24,12 +24,21 @@ variables:
 - 输出超 ${MAX_OUTPUT_CHARS()} 字符会截断
 - run_in_background 参数可后台运行
 ${BASH_TOOL_EXTRA_NOTES()}
-禁用命令（用专用工具代替）：
-- find/ls → ${SEARCH_TOOL_NAME}（例外：fd 允许使用，性能更优）
-- grep/rg → ${GREP_TOOL_NAME}
-- cat/head/tail → ${READ_TOOL_NAME}
-- sed/awk → ${EDIT_TOOL_NAME}
-- echo > → ${WRITE_TOOL_NAME}
+**工具选择策略**（单文件用专用工具，批量用 shell）：
+
+| 场景 | 推荐方式 | 原因 |
+|------|----------|------|
+| 单文件读取 | ${READ_TOOL_NAME} | 有缓存、支持 offset |
+| 单文件编辑 | ${EDIT_TOOL_NAME} | 精确替换、有校验 |
+| 批量读取 (>3 文件) | cat/head + xargs | 1 次调用 vs N 次 |
+| 批量替换 | sed -i + fd | 1 次调用 vs N 次 Edit |
+| 批量重命名 | mv + fd + while | 1 次调用 |
+
+**批量操作示例**：
+- 批量读取头部: fd -e ts \| head -20 \| xargs -I{} sh -c 'echo === {} === && head -30 {}'
+- 批量替换 import: fd -e ts \| xargs sed -i '' 's/from "old"/from "new"/g'
+- 批量添加文件头: fd -e ts \| xargs -I{} sed -i '' '1i // Copyright' {}
+- 并行格式化: fd -e ts \| xargs -P 8 -I{} prettier --write {}
 
 **必须使用的高性能工具**（禁止用原生命令）：
 

@@ -3,9 +3,9 @@ name: 'Tool Description: Glob'
 description: Tool description for file pattern matching and searching by name
 ccVersion: 2.0.14
 -->
-**禁止直接使用此工具。必须用 Bash 调用 fd 替代。**
+**推荐用 fd 替代**（快 5-10x），但简单单次匹配可直接用 Glob。
 
-fd 比 Glob 快 5-10x，自动忽略 .gitignore，多线程并行。
+fd 优势：自动忽略 .gitignore，多线程并行。
 
 基本语法：fd [pattern] [path]
 不指定 path 时搜索当前目录
