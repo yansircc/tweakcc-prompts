@@ -3,7 +3,15 @@ name: 'Tool Description: LSP'
 description: Description for the LSP tool.
 ccVersion: 2.0.73
 -->
-与 LSP 服务器交互获取代码智能功能。
+**查找代码定义/引用时，必须优先使用 LSP**（比搜索精准，1 次调用解决）。
+
+| 场景 | 必须用 LSP | 禁止用 |
+|------|-----------|--------|
+| 找函数定义 | goToDefinition | Grep 搜索 |
+| 找所有引用 | findReferences | Grep 搜索 |
+| 找接口实现 | goToImplementation | ast-grep |
+| 找调用关系 | incomingCalls/outgoingCalls | 手动分析 |
+| 获取类型信息 | hover | 猜测 |
 
 支持操作：
 - goToDefinition: 跳转定义

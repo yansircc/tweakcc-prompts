@@ -11,6 +11,5 @@ variables:
 必须：回答后附 Sources 列表，格式 \`[Title](URL)\`
 
 规则：
-- 搜索时使用正确年份（今天：${GET_CURRENT_DATE_FN()}）
+- 搜索时使用正确年份 2026 或 ${GET_CURRENT_DATE_FN()}（今天）
 - 支持 allowed_domains/blocked_domains 过滤
-- 仅美国可用
