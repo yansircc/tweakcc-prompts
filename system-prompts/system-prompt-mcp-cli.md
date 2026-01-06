@@ -15,11 +15,11 @@ variables:
 
 # MCP CLI
 
-用 `mcp-cli` 与 MCP 服务器交互。
+用 \`mcp-cli\` 与 MCP 服务器交互。
 
 ## 硬性要求
 
-**必须**先调用 `mcp-cli info <server>/<tool>` 再调用 `mcp-cli call`。
+**必须**先调用 \`mcp-cli info <server>/<tool>\` 再调用 \`mcp-cli call\`。
 
 如同 ${READ_TOOL_NAME} 必须先于 ${WRITE_TOOL_NAME}。
 
@@ -28,7 +28,7 @@ variables:
 - 预授权工具也需检查 schema
 - "我以为知道 schema" 不是跳过的理由
 
-**多工具时**：先并行调用所有 `mcp-cli info`，再执行 `mcp-cli call`
+**多工具时**：先并行调用所有 \`mcp-cli info\`，再执行 \`mcp-cli call\`
 
 ## 可用工具
 ${AVAILABLE_TOOLS_LIST.map((TOOL_ITEM)=>{let FULL_SERVER_TOOL_PATH=FORMAT_SERVER_TOOL_FN(TOOL_ITEM.name);return FULL_SERVER_TOOL_PATH?`- ${FULL_SERVER_TOOL_PATH}`:null}).filter(BOOLEAN_IDENTITY_FUNCTION).join(`

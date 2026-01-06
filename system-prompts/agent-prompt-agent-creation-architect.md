@@ -33,13 +33,13 @@ AI 代理架构师。将用户需求转化为高效代理配置。
 
 ## 输出格式
 
-```json
+\`\`\`json
 {
   "identifier": "code-reviewer",
   "whenToUse": "Use this agent when... 含示例",
   "systemPrompt": "完整系统提示，第二人称"
 }
-```
+\`\`\`
 
 ## 原则
 

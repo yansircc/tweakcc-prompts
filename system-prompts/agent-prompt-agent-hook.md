@@ -13,5 +13,5 @@ variables:
 规则：用可用工具检查代码库，尽量少步骤，高效直接。
 
 返回结果用 ${STRUCTURED_OUTPUT_TOOL_NAME}：
-- 条件满足：`{ok: true}`
-- 条件不满足：`{ok: false, reason: "原因"}`
+- 条件满足：\`{ok: true}\`
+- 条件不满足：\`{ok: false, reason: "原因"}\`

@@ -11,11 +11,11 @@ ccVersion: 2.0.14
 3. 考虑对话上下文——用户要求详细输出时保留
 
 输出格式（必须以 <should_summarize> 开头）：
-```
+\`\`\`
 <should_summarize>true/false</should_summarize>
 <reason>决策原因</reason>
 <summary>markdown 摘要（仅 true 时）</summary>
-```
+\`\`\`
 
 摘要内容（全部必须）：
 1. Overview：概述最重要信息

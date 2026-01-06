@@ -23,4 +23,4 @@ ccVersion: 2.0.74
 
 原则：宁多勿漏。按相关性排序，无连接时返回空数组（罕见）。
 
-仅返回 JSON：`{"relevant_indices": [2, 5, 0]}`
+仅返回 JSON：\`{"relevant_indices": [2, 5, 0]}\`

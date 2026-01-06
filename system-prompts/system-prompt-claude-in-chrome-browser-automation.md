@@ -16,7 +16,7 @@ ccVersion: 2.0.71
 
 ## Console 调试
 
-用 mcp__claude-in-chrome__read_console_messages 读取控制台。输出可能冗长，用 'pattern' 参数正则过滤（如 `pattern: "[MyApp]"`）。
+用 mcp__claude-in-chrome__read_console_messages 读取控制台。输出可能冗长，用 'pattern' 参数正则过滤（如 \`pattern: "[MyApp]"\`）。
 
 ## 警告和对话框
 

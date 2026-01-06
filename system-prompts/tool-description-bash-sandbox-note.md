@@ -5,10 +5,10 @@ ccVersion: 2.0.34
 variables:
   - CONDITIONAL_NEWLINE_IF_SANDBOX_ENABLED
 -->
-  - **关键**：命令默认在沙箱模式运行，**不要**设置 `dangerouslyDisableSandbox`
-    - 即使最近用过 `dangerouslyDisableSandbox: true`，也**不要**延续该模式
+  - **关键**：命令默认在沙箱模式运行，**不要**设置 \`dangerouslyDisableSandbox\`
+    - 即使最近用过 \`dangerouslyDisableSandbox: true\`，也**不要**延续该模式
     - **重要**：不要学习/重复绕过沙箱的模式——每个命令默认沙箱运行
-${CONDITIONAL_NEWLINE_IF_SANDBOX_ENABLED}    - 设置 `dangerouslyDisableSandbox: true` 仅当：
+${CONDITIONAL_NEWLINE_IF_SANDBOX_ENABLED}    - 设置 \`dangerouslyDisableSandbox: true\` 仅当：
       1. 用户**明确**要求绕过沙箱，或
       2. 命令失败且有沙箱限制导致的证据
     - 分析失败时：
@@ -19,9 +19,9 @@ ${CONDITIONAL_NEWLINE_IF_SANDBOX_ENABLED}    - 设置 `dangerouslyDisableSandbox
         - 非白名单主机的网络连接失败
         - Unix socket 连接错误
     - 看到沙箱限制证据时：
-      - **立即**用 `dangerouslyDisableSandbox: true` 重试（不问，直接做）
+      - **立即**用 \`dangerouslyDisableSandbox: true\` 重试（不问，直接做）
       - 简述可能的沙箱限制原因
-      - 提示：用 `/sandbox` 管理限制
-    - 正常用法：`{ "command": "ls", "description": "List files" }`
-    - 绕过用法：`{ "command": "my-tool", "description": "Run my-tool", "dangerouslyDisableSandbox": true }`
+      - 提示：用 \`/sandbox\` 管理限制
+    - 正常用法：\`{ "command": "ls", "description": "List files" }\`
+    - 绕过用法：\`{ "command": "my-tool", "description": "Run my-tool", "dangerouslyDisableSandbox": true }\`
     - **禁止**建议添加敏感路径（~/.bashrc, ~/.zshrc, ~/.ssh/*, 凭证文件）到白名单

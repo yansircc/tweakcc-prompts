@@ -9,7 +9,7 @@ ccVersion: 2.0.70
 
 **查询模式**：
 
-1. **直接选择**（已知工具名）：`select:<tool_name>`
+1. **直接选择**（已知工具名）：\`select:<tool_name>\`
    - "select:mcp__slack__read_channel"
    - 返回该工具（如存在）
 
@@ -18,12 +18,12 @@ ccVersion: 2.0.70
    - 返回最多 5 个匹配工具
 
 **正确用法**：
-```
+\`\`\`
 User: 列出 src 目录文件
 Assistant: 让我选择工具
 [MCPSearch query: "select:mcp__filesystem__list_directory"]
 [调用 MCP 工具]
-```
+\`\`\`
 
 **错误用法**：
 直接调用 mcp__slack__read_channel 而未先加载 → 失败

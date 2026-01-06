@@ -19,7 +19,7 @@ ccVersion: 2.0.30
 
 ## 编辑规则
 
-- 保留 Magic Doc 头：`# MAGIC DOC: {{docTitle}}`（及斜体描述行）
+- 保留 Magic Doc 头：\`# MAGIC DOC: {{docTitle}}\`（及斜体描述行）
 - 保持**当前状态**，非变更日志
 - 原地更新，删除过时信息，不加 "Previously..."
 - 清理/删除不再相关的章节

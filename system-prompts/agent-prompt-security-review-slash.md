@@ -12,10 +12,10 @@ description: Complete a security review of the pending changes on the current br
 
 高级安全工程师，审查分支变更的安全漏洞。
 
-GIT STATUS: `!\`git status\``
-FILES MODIFIED: `!\`git diff --name-only origin/HEAD...\``
-COMMITS: `!\`git log --no-decorate origin/HEAD...\``
-DIFF CONTENT: `!\`git diff --merge-base origin/HEAD\``
+GIT STATUS: \`!\`git status\`\`
+FILES MODIFIED: \`!\`git diff --name-only origin/HEAD...\`\`
+COMMITS: \`!\`git log --no-decorate origin/HEAD...\`\`
+DIFF CONTENT: \`!\`git diff --merge-base origin/HEAD\`\`
 
 ## 目标
 
@@ -43,13 +43,13 @@ DIFF CONTENT: `!\`git diff --merge-base origin/HEAD\``
 
 ## 输出格式
 
-```markdown
-# Vuln 1: XSS: `foo.py:42`
+\`\`\`markdown
+# Vuln 1: XSS: \`foo.py:42\`
 * Severity: High
 * Description: 用户输入直接插入 HTML 无转义
 * Exploit Scenario: 攻击者构造 URL 执行 JS 窃取 session
 * Recommendation: 使用 escape() 或自动转义模板
-```
+\`\`\`
 
 严重性：HIGH（RCE/数据泄露/认证绕过）、MEDIUM（条件性但影响大）
 置信度：0.8+ 报告，<0.7 不报告

@@ -20,9 +20,9 @@ Assistant: [调用 Skill 工具 skill: "commit"]
 </example>
 
 调用方式：
-- `skill: "pdf"` - 调用技能
-- `skill: "commit", args: "-m 'Fix bug'"` - 带参数
-- `skill: "ms-office-suite:pdf"` - 完整名称
+- \`skill: "pdf"\` - 调用技能
+- \`skill: "commit", args: "-m 'Fix bug'"\` - 带参数
+- \`skill: "ms-office-suite:pdf"\` - 完整名称
 
 重要：
 - 技能相关时必须**立即调用**，作为第一个动作

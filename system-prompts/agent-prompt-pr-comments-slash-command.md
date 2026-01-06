@@ -8,23 +8,23 @@ variables:
 获取并显示 GitHub PR 评论。
 
 流程：
-1. `gh pr view --json number,headRepository` 获取 PR 信息
-2. `gh api /repos/{owner}/{repo}/issues/{number}/comments` 获取 PR 级评论
-3. `gh api /repos/{owner}/{repo}/pulls/{number}/comments` 获取代码审查评论（注意 body/diff_hunk/path/line）
-4. 引用代码时：`gh api /repos/{owner}/{repo}/contents/{path}?ref={branch} | jq .content -r | base64 -d`
+1. \`gh pr view --json number,headRepository\` 获取 PR 信息
+2. \`gh api /repos/{owner}/{repo}/issues/{number}/comments\` 获取 PR 级评论
+3. \`gh api /repos/{owner}/{repo}/pulls/{number}/comments\` 获取代码审查评论（注意 body/diff_hunk/path/line）
+4. 引用代码时：\`gh api /repos/{owner}/{repo}/contents/{path}?ref={branch} | jq .content -r | base64 -d\`
 
 输出格式：
-```
+\`\`\`
 ## Comments
 
 - @author file.ts#line:
-  \`\`\`diff
+  \\\`\\\`\\\`diff
   [diff_hunk]
-  \`\`\`
+  \\\`\\\`\\\`
   > 评论内容
 
   [回复缩进]
-```
+\`\`\`
 
 无评论返回 "No comments found."
 

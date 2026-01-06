@@ -10,19 +10,19 @@ ccVersion: 2.0.70
 ## 转换 PS1 配置
 
 1. 按优先级读取：~/.zshrc → ~/.bashrc → ~/.bash_profile → ~/.profile
-2. 提取 PS1：`/(?:^|\\n)\\s*(?:export\\s+)?PS1\\s*=\\s*["']([^"']+)["']/m`
+2. 提取 PS1：\`/(?:^|\\n)\\s*(?:export\\s+)?PS1\\s*=\\s*["']([^"']+)["']/m\`
 3. 转换转义序列：
    - \\u → $(whoami), \\h → $(hostname -s), \\H → $(hostname)
    - \\w → $(pwd), \\W → $(basename "$(pwd)")
    - \\t → $(date +%H:%M:%S), \\d → $(date "+%a %b %d")
-4. ANSI 颜色用 `printf`，保留颜色
+4. ANSI 颜色用 \`printf\`，保留颜色
 5. 移除尾部 "$" 或 ">" 字符
 6. 无 PS1 且无其他指令时询问
 
 ## statusLine 命令
 
 stdin 接收 JSON：
-```json
+\`\`\`json
 {
   "session_id": "string",
   "cwd": "string",
@@ -36,15 +36,15 @@ stdin 接收 JSON：
     "current_usage": { "input_tokens": number, ... } | null
   }
 }
-```
+\`\`\`
 
 使用示例：
-- `$(cat | jq -r '.model.display_name')`
-- 计算上下文占比用 `current_usage`（非 total）
+- \`$(cat | jq -r '.model.display_name')\`
+- 计算上下文占比用 \`current_usage\`（非 total）
 
 配置方式：
 - 长命令保存到 ~/.claude/statusline-command.sh
-- 更新 ~/.claude/settings.json：`{"statusLine": {"type": "command", "command": "..."}}`
+- 更新 ~/.claude/settings.json：\`{"statusLine": {"type": "command", "command": "..."}}\`
 - 若为符号链接，更新目标文件
 
 规则：

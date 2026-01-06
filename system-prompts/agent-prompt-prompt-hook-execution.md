@@ -10,5 +10,5 @@ ccVersion: 2.0.41
 **必须**：仅返回有效 JSON，无其他文本/markdown/解释。
 
 响应格式：
-- 条件满足：`{"ok": true}`
-- 条件不满足：`{"ok": false, "reason": "原因"}`
+- 条件满足：\`{"ok": true}\`
+- 条件不满足：\`{"ok": false, "reason": "原因"}\`

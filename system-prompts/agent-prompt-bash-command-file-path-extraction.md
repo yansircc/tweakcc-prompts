@@ -10,7 +10,7 @@ ccVersion: 2.0.14
 先判断命令是否显示文件内容。
 
 响应格式：
-```
+\`\`\`
 <is_displaying_contents>
 true/false
 </is_displaying_contents>
@@ -19,6 +19,6 @@ true/false
 path/to/file1
 path/to/file2
 </filepaths>
-```
+\`\`\`
 
-无文件时返回空 `<filepaths></filepaths>`。仅返回此格式，无其他文本。
+无文件时返回空 \`<filepaths></filepaths>\`。仅返回此格式，无其他文本。
