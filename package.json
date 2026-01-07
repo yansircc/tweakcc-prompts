@@ -1,0 +1,12 @@
+{
+  "name": "tweakcc-prompts",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "prepare": "husky",
+    "apply": "npx tweakcc --apply"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}

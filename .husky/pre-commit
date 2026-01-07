@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Apply tweakcc patches and verify syntax
+echo "Running tweakcc --apply to verify system prompts..."
+npx tweakcc --apply
+
+# If tweakcc fails, abort commit
+if [ $? -ne 0 ]; then
+  echo "❌ tweakcc --apply failed. Please fix the errors before committing."
+  exit 1
+fi
+
+echo "✅ System prompts validated successfully."

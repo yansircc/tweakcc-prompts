@@ -1,5 +1,7 @@
 .DS_Store
 config.json
+node_modules/
+package-lock.json
 prompt-data-cache
 cli.js.backup
 native-binary.backup
