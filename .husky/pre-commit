@@ -1,5 +1,21 @@
 #!/bin/sh
 
+cd "$(dirname "$0")/.."
+
+# Pre-check: detect unescaped Perl modifiers BEFORE apply
+echo "Checking for unescaped JS escape sequences in system prompts..."
+
+if perl scripts/check-escape.pl system-prompts/*.md; then
+  : # No issues found
+else
+  echo ""
+  echo "❌ Found unescaped Perl modifiers that will cause JS syntax errors!"
+  echo "💡 Fix: \\u → \\\\u, \\l → \\\\l, etc."
+  exit 1
+fi
+
+echo "✅ Pre-check passed."
+
 # Apply tweakcc patches
 echo "Running tweakcc --apply..."
 npx tweakcc --apply
@@ -9,13 +25,13 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Verify syntax by actually loading cli.js
+# Final verify: check cli.js syntax with Node
+CLI_PATH="$HOME/.claude/local/node_modules/@anthropic-ai/claude-code/cli.js"
 echo "Verifying cli.js syntax..."
-cc --version > /dev/null 2>&1
+node --check "$CLI_PATH" 2>&1
 
 if [ $? -ne 0 ]; then
-  echo "❌ Syntax error in cli.js! Run 'cc --version' to see details."
-  echo "💡 Check for unescaped \\u, \\l, \\L, \\U, \\E in system prompts."
+  echo "❌ Syntax error in cli.js!"
   exit 1
 fi
 

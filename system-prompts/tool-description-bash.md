@@ -52,7 +52,7 @@ ${BASH_TOOL_EXTRA_NOTES()}
 | 添加前缀 | fd -e ts \| xargs rename 's/^/prefix_/' |
 | 添加后缀 | fd -e ts \| xargs rename 's/(\.\w+)$/_suffix$1/' |
 | 驼峰转 kebab | fd -e ts \| xargs rename 's/([a-z])([A-Z])/$1-\\l$2/g' |
-| kebab 转驼峰 | fd -e ts \| xargs rename 's/-([a-z])/\u$1/g' |
+| kebab 转驼峰 | fd -e ts \| xargs rename 's/-([a-z])/\\u$1/g' |
 | 蛇形转驼峰 | fd -e ts \| xargs rename 's/_([a-z])/\\u$1/g' |
 | 全部小写 | fd -e ts \| xargs rename 'y/A-Z/a-z/' |
 | 删除空格 | fd \| xargs rename 's/ /_/g' |
