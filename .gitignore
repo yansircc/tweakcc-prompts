@@ -1,4 +1,5 @@
 .DS_Store
+config.json
 prompt-data-cache
 cli.js.backup
 native-binary.backup

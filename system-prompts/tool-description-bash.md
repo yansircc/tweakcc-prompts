@@ -41,6 +41,27 @@ ${BASH_TOOL_EXTRA_NOTES()}
 - 批量替换: fd -e ts \| xargs sed -i '' 's/from "old"/from "new"/g'
 - 并行处理: fd -e ts \| xargs -P 8 -I{} prettier --write {}
 
+**批量重命名**（使用 Perl rename，表达能力最强）：
+
+安装: brew install rename
+
+| 场景 | 命令 |
+|------|------|
+| 预览模式 | rename -n 's/old/new/' files (-n = dry run，必须先预览) |
+| 扩展名修改 | fd -e js \| xargs rename 's/\.js$/.ts/' |
+| 添加前缀 | fd -e ts \| xargs rename 's/^/prefix_/' |
+| 添加后缀 | fd -e ts \| xargs rename 's/(\.\w+)$/_suffix$1/' |
+| 驼峰转 kebab | fd -e ts \| xargs rename 's/([a-z])([A-Z])/$1-\l$2/g' |
+| kebab 转驼峰 | fd -e ts \| xargs rename 's/-([a-z])/\u$1/g' |
+| 蛇形转驼峰 | fd -e ts \| xargs rename 's/_([a-z])/\u$1/g' |
+| 全部小写 | fd -e ts \| xargs rename 'y/A-Z/a-z/' |
+| 删除空格 | fd \| xargs rename 's/ /_/g' |
+
+Perl 替换修饰符：
+- \l 下个字符小写，\u 下个字符大写
+- \L...\E 区间小写，\U...\E 区间大写
+- g 全局替换，i 忽略大小写
+
 **必须使用的高性能工具**（禁止用原生命令）：
 
 | 场景 | 必须用 | 禁止用 |

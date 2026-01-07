@@ -179,6 +179,7 @@ project_scan({
 | 项目概览 | `project_scan` | tokei + fd |
 | 批量读取 (>3 文件) | `batch_read` | cat/head + xargs |
 | 批量替换 | `batch_edit` | sed -i + fd |
+| 批量重命名 | fd + rename | - |
 | 单文件读取 | Read 工具 | - |
 | 单文件编辑 | Edit 工具 | - |
 | 找定义/引用 | LSP | ast-grep |
@@ -191,7 +192,7 @@ project_scan({
 | 工具 | 优化内容 |
 |------|----------|
 | **Glob** | 推荐用 `fd` 替代 |
-| **Bash** | MCP 优先、高性能工具表、输出限制、结构化输出 |
+| **Bash** | MCP 优先、高性能工具表、输出限制、结构化输出、批量重命名 |
 | **Grep** | `ast-grep` 优先、代码查找决策树 |
 | **LSP** | 优先策略（比搜索精准，1 次调用解决） |
 | **Read** | 智能读取策略、批量读取提示 |
