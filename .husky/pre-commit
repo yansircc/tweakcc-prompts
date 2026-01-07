@@ -1,12 +1,21 @@
 #!/bin/sh
 
-# Apply tweakcc patches and verify syntax
-echo "Running tweakcc --apply to verify system prompts..."
+# Apply tweakcc patches
+echo "Running tweakcc --apply..."
 npx tweakcc --apply
 
-# If tweakcc fails, abort commit
 if [ $? -ne 0 ]; then
-  echo "❌ tweakcc --apply failed. Please fix the errors before committing."
+  echo "❌ tweakcc --apply failed."
+  exit 1
+fi
+
+# Verify syntax by actually loading cli.js
+echo "Verifying cli.js syntax..."
+cc --version > /dev/null 2>&1
+
+if [ $? -ne 0 ]; then
+  echo "❌ Syntax error in cli.js! Run 'cc --version' to see details."
+  echo "💡 Check for unescaped \\u, \\l, \\L, \\U, \\E in system prompts."
   exit 1
 fi
 
