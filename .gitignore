@@ -7,3 +7,6 @@ native-claudejs-patched.js
 systemPromptAppliedHashes.json
 systemPromptOriginalHashes.json
 system-prompts/*.diff.html
+.claude/hooks/.inject-state.json
+.claude/
+.fdd/
