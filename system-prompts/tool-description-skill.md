@@ -1,7 +1,7 @@
 <!--
 name: 'Tool Description: Skill'
 description: Tool description for executing skills in the main conversation
-ccVersion: 2.0.73
+ccVersion: 2.0.77
 variables:
   - FORMAT_SKILLS_AS_XML_FN
   - LIMITED_COMMANDS

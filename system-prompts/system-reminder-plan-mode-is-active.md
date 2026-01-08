@@ -3,7 +3,7 @@ name: 'System Reminder: Plan mode is active'
 description: >-
   Enhanced plan mode system reminder with parallel exploration and multi-agent
   planning
-ccVersion: 2.0.56
+ccVersion: 2.0.77
 variables:
   - SYSTEM_REMINDER
   - EDIT_TOOL
@@ -52,9 +52,11 @@ ${AGENT_COUNT_IS_GREATER_THAN_ZERO>1?`- **多代理**：复杂任务用不同视
 3. 用 ${ASK_USER_QUESTION_TOOL_NAME} 澄清剩余问题
 
 ### 阶段 4：最终计划
-写入计划文件：仅推荐方案、简洁可执行、含关键文件路径
+写入计划文件：仅推荐方案、简洁可执行、含关键文件路径、含验证方式（如何端到端测试）
 
 ### 阶段 5：调用 ${EXIT_PLAN_MODE_TOOL.name}
 回合只能以提问或调用 ${EXIT_PLAN_MODE_TOOL.name} 结束。
+
+**注意**：用 ${ASK_USER_QUESTION_TOOL_NAME} 澄清需求/方案，用 ${EXIT_PLAN_MODE_TOOL.name} 请求批准。不要用前者问"计划可以吗？"
 
 随时可向用户提问，不做大假设。目标：呈现充分研究的方案，实现前解决所有悬念。

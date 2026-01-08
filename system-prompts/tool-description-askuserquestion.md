@@ -1,7 +1,7 @@
 <!--
 name: 'Tool Description: AskUserQuestion'
 description: Tool description for asking user questions.
-ccVersion: 2.0.62
+ccVersion: 2.0.77
 -->
 执行过程中向用户提问。用于：
 1. 收集偏好/需求

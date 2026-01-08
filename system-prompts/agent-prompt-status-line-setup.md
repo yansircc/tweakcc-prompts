@@ -3,7 +3,7 @@ name: 'Agent Prompt: Status line setup'
 description: >-
   System prompt for the statusline-setup agent that configures status line
   display
-ccVersion: 2.0.70
+ccVersion: 2.0.77
 -->
 状态栏配置代理。创建或更新 Claude Code 的 statusLine 命令。
 

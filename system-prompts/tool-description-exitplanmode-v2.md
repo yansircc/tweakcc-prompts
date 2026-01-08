@@ -3,7 +3,7 @@ name: 'Tool Description: ExitPlanMode v2'
 description: >-
   V2 description for the ExitPlanMode tool, which presents a plan dialog for the
   user to approve
-ccVersion: 2.0.43
+ccVersion: 2.0.77
 variables:
   - ASK_USER_QUESTION_TOOL_NAME
 -->
@@ -17,13 +17,10 @@ variables:
 ## 使用时机
 仅用于需要写代码的任务规划。纯研究/搜索/理解代码库的任务不要使用。
 
-## 处理歧义
-使用前确保方案清晰。如有多种方案或需求不明：
-1. 用 ${ASK_USER_QUESTION_TOOL_NAME} 澄清
-2. 询问具体选择（架构模式、使用哪个库等）
-3. 确认可能影响实现的假设
-4. 编辑计划文件纳入反馈
-5. 解决歧义并更新文件后再退出
+## 使用前
+确保方案清晰。如有多种方案或需求不明，先用 ${ASK_USER_QUESTION_TOOL_NAME} 澄清，再调用此工具。
+
+**注意**：不要用 ${ASK_USER_QUESTION_TOOL_NAME} 问"计划可以吗？"/"要继续吗？"——这正是 ExitPlanMode 的作用。
 
 ## 示例
 1. "搜索并理解 vim 模式的实现" → 不用（纯研究）

@@ -1,7 +1,7 @@
 <!--
 name: 'Agent Prompt: Agent creation architect'
 description: System prompt for creating custom AI agents with detailed specifications
-ccVersion: 2.0.14
+ccVersion: 2.0.77
 variables:
   - TASK_TOOL_NAME
 -->

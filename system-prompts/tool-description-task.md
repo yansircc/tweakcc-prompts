@@ -1,7 +1,7 @@
 <!--
 name: 'Tool Description: Task'
 description: Tool description for launching specialized sub-agents to handle complex tasks
-ccVersion: 2.0.72
+ccVersion: 2.0.77
 variables:
   - TASK_TOOL
   - AGENT_TYPE_REGISTRY_STRING
@@ -35,7 +35,7 @@ ${AGENT_TYPE_REGISTRY_STRING}
 - 提供 3-5 词描述说明代理任务
 - 独立任务可并行启动多个代理
 - 代理结果对用户不可见，需总结返回
-- run_in_background 后台运行，后续用 ${TASK_TOOL} 获取结果
+- run_in_background 后台运行，后续用 ${AGENT_OUTPUT_TOOL} 获取结果
 - resume 参数可恢复之前的代理（保留上下文）
 - 明确告知代理是写代码还是仅研究
 - "access to current context" 代理可引用对话历史
