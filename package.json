@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "prepare": "husky",
-    "apply": "npx tweakcc --apply"
+    "apply": "node /Users/yansir/code/tmp/tweakcc/dist/index.mjs --apply"
   },
   "devDependencies": {
     "husky": "^9.1.7"
