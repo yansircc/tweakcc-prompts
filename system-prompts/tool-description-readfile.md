@@ -8,28 +8,17 @@ variables:
   - CAN_READ_PDF_FILES
   - BASH_TOOL_NAME
 -->
-读取本地文件。假设用户提供的路径有效。
+读取本地文件。假定可读取机器上所有文件，用户提供的路径视为有效。文件不存在会返回错误。
 
-规则：
-- 必须用绝对路径
-- 默认读 ${DEFAULT_READ_LINES} 行，超长行（>${MAX_LINE_LENGTH} 字符）截断
-- 可指定 offset/limit 读取部分内容
-- 支持格式：代码、图片（PNG/JPG）${CAN_READ_PDF_FILES()?`、PDF`:""}、Jupyter notebook
-- 读目录用 ${BASH_TOOL_NAME} ls
-- 可并行读取多个文件
-
-**智能读取策略**（减少 Token 消耗）：
-
-| 文件大小 | 策略 |
-|----------|------|
-| <200 行 | 直接读取全部 |
-| 200-500 行 | 先读 1-100 行了解结构，再精准读取目标区域 |
-| >500 行 | **禁止全量读取**，必须用 offset/limit 分段读 |
-
-大文件读取流程：
-1. 先 limit=100 了解文件结构
-2. 用 LSP/Grep 定位目标行号
-3. 用 offset/limit 精准读取目标区域（前后各 20 行上下文）
-
-**批量读取 (>3 文件)**：用 xargs 更高效
-- 示例: fd -e ts \| head -10 \| xargs -I{} sh -c 'echo === {} === && head -50 {}'
+用法：
+- file_path 必须绝对路径
+- 默认读取前 ${DEFAULT_READ_LINES} 行，可指定 offset/limit（长文件适用），但建议不设参数读全文件
+- 超 ${MAX_LINE_LENGTH} 字符的行会截断
+- 返回 cat -n 格式，行号从 1 开始
+- 可读图片（PNG/JPG 等），多模态 LLM 视觉呈现${CAN_READ_PDF_FILES()?`
+- 可读 PDF，逐页提取文本和视觉内容`:""}
+- 可读 Jupyter notebook（.ipynb），返回所有 cell 及输出
+- 只能读文件不能读目录，读目录用 ${BASH_TOOL_NAME} 的 ls
+- 单响应可并行调用多工具，推荐推测性并行读取多个潜在有用文件
+- 用户提供截图路径时，**必须**用此工具查看
+- 空文件会收到系统提醒

@@ -7,35 +7,56 @@ variables:
   - AGENT_TYPE_REGISTRY_STRING
   - READ_TOOL
   - GLOB_TOOL
+  - GET_SUBSCRIPTION_TYPE_FN
+  - BASH_TOOL
+  - TASK_TOOL_OBJECT
   - WRITE_TOOL
-  - AGENT_OUTPUT_TOOL
 -->
-启动子代理自主处理复杂多步任务。必须指定 subagent_type。
+启动子代理自主处理复杂多步任务。
+
+${TASK_TOOL} 启动专用代理（子进程），每种类型有特定能力和可用工具。
 
 可用代理类型：
 ${AGENT_TYPE_REGISTRY_STRING}
 
-不适用场景（用专用工具更快）：
-- 读特定文件 → ${READ_TOOL.name}/${GLOB_TOOL.name}
-- 搜索类定义 → ${GLOB_TOOL.name}
-- 2-3 个文件内搜索 → ${READ_TOOL.name}
+必须指定 subagent_type 参数选择代理类型。
 
-**必须委托给 subagent 的场景**（保护主上下文）：
+**不要**使用 ${TASK_TOOL} 的情况：
+- 读特定文件路径 → 用 ${READ_TOOL} 或 ${GLOB_TOOL}
+- 搜索类定义如 "class Foo" → 用 ${GLOB_TOOL}
+- 在 2-3 个文件内搜索代码 → 用 ${READ_TOOL}
+- 与上述代理描述无关的任务
 
-| 场景 | 原因 |
-|------|------|
-| 探索代码库结构 | 产生大量文件列表，污染上下文 |
-| 搜索多个文件（>3） | 搜索结果消耗大量 token |
-| 调研问题/查文档 | 中间过程对主任务无用 |
-| 验证/测试细节 | 结果可总结为一句话 |
-
-主 agent 职责：**决策 + 执行**，不做探索。
-
-规则：
-- 提供 3-5 词描述说明代理任务
-- 独立任务可并行启动多个代理
-- 代理结果对用户不可见，需总结返回
-- run_in_background 后台运行，后续用 ${AGENT_OUTPUT_TOOL} 获取结果
-- resume 参数可恢复之前的代理（保留上下文）
+用法：
+- 总是包含简短描述（3-5 词）${GET_SUBSCRIPTION_TYPE_FN()!=="pro"?`
+- 尽可能并行启动多代理：单消息多工具调用`:""}
+- 代理返回结果对用户不可见，需发文本消息摘要给用户
+- run_in_background 后台运行，返回 output_file 路径，用 ${READ_TOOL} 或 ${BASH_TOOL} \`tail\` 查看
+- resume 参数传 agent ID 可恢复之前的代理（保留完整上下文）
+- "access to current context" 的代理可见完整对话历史，可用简洁 prompt 引用上下文
+- 代理输出通常可信
 - 明确告知代理是写代码还是仅研究
-- "access to current context" 代理可引用对话历史
+- 代理描述提到"主动使用"时，无需用户要求即可启动
+- 用户要求"并行"运行代理时，**必须**单消息多个 ${TASK_TOOL_OBJECT.name} 调用
+
+示例：
+
+<example_agent_descriptions>
+"test-runner": 写完代码后运行测试
+"greeting-responder": 回应用户问候
+</example_agent_description>
+
+<example>
+user: "写一个判断素数的函数"
+assistant: 用 ${WRITE_TOOL} 写代码
+<code>
+function isPrime(n) {
+  if (n <= 1) return false
+  for (let i = 2; i * i <= n; i++) {
+    if (n % i === 0) return false
+  }
+  return true
+}
+</code>
+assistant: 用 ${TASK_TOOL_OBJECT.name} 启动 test-runner 代理运行测试
+</example>

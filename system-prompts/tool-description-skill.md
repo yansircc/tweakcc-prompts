@@ -5,7 +5,6 @@ ccVersion: 2.0.77
 variables:
   - FORMAT_SKILLS_AS_XML_FN
   - LIMITED_COMMANDS
-  - AVAILABLE_SKILLs
 -->
 在主对话中执行技能
 
@@ -34,5 +33,5 @@ Assistant: [调用 Skill 工具 skill: "commit"]
 </skills_instructions>
 
 <available_skills>
-${FORMAT_SKILLS_AS_XML_FN(LIMITED_COMMANDS,AVAILABLE_SKILLs.length)}
+${LIMITED_COMMANDS}
 </available_skills>

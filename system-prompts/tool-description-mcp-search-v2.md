@@ -1,0 +1,39 @@
+<!--
+name: 'Tool Description: MCP Search v2'
+description: ''
+ccVersion: 2.1.2
+variables:
+  - SET_Q
+-->
+搜索或选择 MCP 工具使其可用。
+
+**硬性前置要求**：调用 MCP 工具前**必须**先用此工具加载。
+
+原因：MCP 工具延迟加载，未加载直接调用会失败。
+
+**查询模式**：
+
+1. **直接选择**（已知工具名）：\`select:<tool_name>\`
+   - "select:mcp__slack__read_channel"
+   - 返回该工具（如存在）
+
+2. **关键词搜索**（不确定用哪个）：
+   - "list directory" / "read file" / "slack message"
+   - 返回最多 5 个相关工具
+
+**正确用法**：
+\`\`\`
+用户：列出 src 目录文件
+助手：[MCPSearch query: "select:mcp__filesystem__list_directory"]
+助手：[调用 MCP 工具]
+\`\`\`
+
+**错误用法**（禁止）：
+\`\`\`
+用户：读 slack 消息
+助手：[直接调用 mcp__slack__read_channel] ← 错误！必须先加载
+\`\`\`
+
+可用 MCP 工具（使用前必须加载）：
+${SET_Q.map((G)=>G.name).join(`
+`)}

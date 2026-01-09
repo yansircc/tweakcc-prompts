@@ -13,3 +13,4 @@ system-prompts/*.diff.html
 .claude/hooks/.inject-state.json
 .claude/
 .fdd/
+*.backup
