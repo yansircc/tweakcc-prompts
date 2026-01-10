@@ -6,56 +6,56 @@ variables:
   - TOOLS
   - TOOL
 -->
-Search for or select MCP tools to make them available for use.
+搜索或选择 MCP 工具以使其可用。
 
-**MANDATORY PREREQUISITE - THIS IS A HARD REQUIREMENT**
+**强制前置条件——硬性要求**
 
-You MUST use this tool to load MCP tools BEFORE calling them directly.
+调用 MCP 工具前**必须**先用此工具加载。
 
-This is a BLOCKING REQUIREMENT - MCP tools listed below are NOT available until you load them using this tool.
+这是阻断性要求——下列 MCP 工具在用此工具加载前**不可用**。
 
-**Why this is non-negotiable:**
-- MCP tools are deferred and not loaded until discovered via this tool
-- Calling an MCP tool without first loading it will fail
+**为何不可协商：**
+- MCP 工具延迟加载，需通过此工具发现后才加载
+- 未加载直接调用会失败
 
-**Query modes:**
+**查询模式：**
 
-1. **Direct selection** - Use \`select:<tool_name>\` when you know exactly which tool you need:
+1. **直接选择** - 确切知道需要哪个工具时用 \`select:<tool_name>\`：
    - "select:mcp__slack__read_channel"
    - "select:mcp__filesystem__list_directory"
-   - Returns just that tool if it exists
+   - 存在则返回该工具
 
-2. **Keyword search** - Use keywords when you're unsure which tool to use:
-   - "list directory" - find tools for listing directories
-   - "read file" - find tools for reading files
-   - "slack message" - find slack messaging tools
-   - Returns up to 5 matching tools ranked by relevance
+2. **关键词搜索** - 不确定用哪个工具时用关键词：
+   - "list directory" - 查找目录列表工具
+   - "read file" - 查找文件读取工具
+   - "slack message" - 查找 slack 消息工具
+   - 返回最多 5 个按相关性排序的工具
 
-**CORRECT Usage Patterns:**
+**正确用法：**
 
 <example>
 User: List files in the src directory
-Assistant: I can see mcp__filesystem__list_directory in the available tools. Let me select it.
-[Calls MCPSearch with query: "select:mcp__filesystem__list_directory"]
-[Calls the MCP tool]
+Assistant: 看到可用工具中有 mcp__filesystem__list_directory，选择它。
+[调用 MCPSearch，query: "select:mcp__filesystem__list_directory"]
+[调用该 MCP 工具]
 </example>
 
 <example>
 User: I need to work with slack somehow
-Assistant: Let me search for slack tools.
-[Calls MCPSearch with query: "slack"]
-Assistant: Found several options including mcp__slack__read_channel.
-[Calls the MCP tool]
+Assistant: 搜索 slack 工具。
+[调用 MCPSearch，query: "slack"]
+Assistant: 找到几个选项，含 mcp__slack__read_channel。
+[调用该 MCP 工具]
 </example>
 
-**INCORRECT Usage Pattern - NEVER DO THIS:**
+**错误用法——禁止这样做：**
 
 <bad-example>
 User: Read my slack messages
-Assistant: [Directly calls mcp__slack__read_channel without loading it first]
-WRONG - You must load the tool FIRST using this tool
+Assistant: [未先加载直接调用 mcp__slack__read_channel]
+错误 - 必须先用此工具加载
 </bad-example>
 
-Available MCP tools (must be loaded before use):
+可用 MCP 工具（使用前必须加载）：
 ${TOOLS.map((TOOL)=>TOOL.name).join(`
 `)}

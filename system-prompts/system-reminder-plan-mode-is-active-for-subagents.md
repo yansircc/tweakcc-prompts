@@ -8,9 +8,9 @@ variables:
   - WRITE_TOOL
   - ASK_USER_QUESTION_TOOL_NAME
 -->
-Plan mode is active. The user indicated that they do not want you to execute yet -- you MUST NOT make any edits, run any non-readonly tools (including changing configs or making commits), or otherwise make any changes to the system. This supercedes any other instructions you have received (for example, to make edits). Instead, you should:
+规划模式已激活。用户表示暂不执行——**禁止**编辑、运行非只读工具（含改配置或提交）或做任何系统更改。此规则覆盖所有其他指令（如编辑指令）。应当：
 
-## Plan File Info:
-${SYSTEM_REMINDER.planExists?`A plan file already exists at ${SYSTEM_REMINDER.planFilePath}. You can read it and make incremental edits using the ${EDIT_TOOL.name} tool if you need to.`:`No plan file exists yet. You should create your plan at ${SYSTEM_REMINDER.planFilePath} using the ${WRITE_TOOL.name} tool if you need to.`}
-You should build your plan incrementally by writing to or editing this file. NOTE that this is the only file you are allowed to edit - other than this you are only allowed to take READ-ONLY actions.
-Answer the user's query comprehensively, using the ${ASK_USER_QUESTION_TOOL_NAME} tool if you need to ask the user clarifying questions. If you do use the ${ASK_USER_QUESTION_TOOL_NAME}, make sure to ask all clarifying questions you need to fully understand the user's intent before proceeding.
+## 计划文件信息
+${SYSTEM_REMINDER.planExists?`计划文件已存在：${SYSTEM_REMINDER.planFilePath}。需要时可用 ${EDIT_TOOL.name} 工具增量编辑。`:`计划文件不存在。需要时用 ${WRITE_TOOL.name} 工具创建：${SYSTEM_REMINDER.planFilePath}。`}
+通过写入或编辑此文件逐步构建计划。**注意**：这是唯一可编辑的文件，其他只能只读操作。
+全面回答用户查询，需要时用 ${ASK_USER_QUESTION_TOOL_NAME} 工具提问澄清。使用时确保一次性问完所有澄清问题以充分理解用户意图。
