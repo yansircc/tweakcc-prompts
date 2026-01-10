@@ -5,29 +5,21 @@ ccVersion: 2.0.56
 variables:
   - GET_CURRENT_DATE_FN
 -->
+搜索网页获取最新信息。用于访问知识截止日期之后的信息。
 
-- Allows Claude to search the web and use the results to inform responses
-- Provides up-to-date information for current events and recent data
-- Returns search result information formatted as search result blocks, including links as markdown hyperlinks
-- Use this tool for accessing information beyond Claude's knowledge cutoff
-- Searches are performed automatically within a single API call
+**必须**：回答后附 "Sources:" 部分，列出相关 URL：
+\`\`\`
+[回答内容]
 
-CRITICAL REQUIREMENT - You MUST follow this:
-  - After answering the user's question, you MUST include a "Sources:" section at the end of your response
-  - In the Sources section, list all relevant URLs from the search results as markdown hyperlinks: [Title](URL)
-  - This is MANDATORY - never skip including sources in your response
-  - Example format:
+Sources:
+- [标题1](https://example.com/1)
+- [标题2](https://example.com/2)
+\`\`\`
 
-    [Your answer here]
+用法：
+- 支持域名过滤（include/block）
+- 仅限美国可用
 
-    Sources:
-    - [Source Title 1](https://example.com/1)
-    - [Source Title 2](https://example.com/2)
-
-Usage notes:
-  - Domain filtering is supported to include or block specific websites
-  - Web search is only available in the US
-
-IMPORTANT - Use the correct year in search queries:
-  - Today's date is ${GET_CURRENT_DATE_FN()}. You MUST use this year when searching for recent information, documentation, or current events.
-  - Example: If today is 2025-07-15 and the user asks for "latest React docs", search for "React documentation 2025", NOT "React documentation 2024"
+**重要**：搜索时用正确年份。今天是 ${GET_CURRENT_DATE_FN()}。
+- 正确：用户问"最新 React 文档" → 搜索 "React documentation 2025"
+- 错误：搜索 "React documentation 2024"

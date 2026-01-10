@@ -7,26 +7,22 @@ ccVersion: 2.0.77
 variables:
   - ASK_USER_QUESTION_TOOL_NAME
 -->
-Use this tool when you are in plan mode and have finished writing your plan to the plan file and are ready for user approval.
+计划写入文件后，准备请求用户批准时使用。
 
-## How This Tool Works
-- You should have already written your plan to the plan file specified in the plan mode system message
-- This tool does NOT take the plan content as a parameter - it will read the plan from the file you wrote
-- This tool simply signals that you're done planning and ready for the user to review and approve
-- The user will see the contents of your plan file when they review it
+## 工作方式
+- 计划应已写入系统消息指定的计划文件
+- 此工具不接收计划内容参数——从文件读取
+- 仅作为"规划完成"信号，用户将看到文件内容
 
-## When to Use This Tool
-IMPORTANT: Only use this tool when the task requires planning the implementation steps of a task that requires writing code. For research tasks where you're gathering information, searching files, reading files or in general trying to understand the codebase - do NOT use this tool.
+## 使用时机
+仅用于需要写代码的任务规划。纯研究/搜索/理解代码库的任务不要使用。
 
-## Before Using This Tool
-Ensure your plan is complete and unambiguous:
-- If you have unresolved questions about requirements or approach, use ${ASK_USER_QUESTION_TOOL_NAME} first (in earlier phases)
-- Once your plan is finalized, use THIS tool to request approval
+## 使用前
+确保方案清晰。如有多种方案或需求不明，先用 ${ASK_USER_QUESTION_TOOL_NAME} 澄清，再调用此工具。
 
-**Important:** Do NOT use ${ASK_USER_QUESTION_TOOL_NAME} to ask "Is this plan okay?" or "Should I proceed?" - that's exactly what THIS tool does. ExitPlanMode inherently requests user approval of your plan.
+**注意**：不要用 ${ASK_USER_QUESTION_TOOL_NAME} 问"计划可以吗？"/"要继续吗？"——这正是 ExitPlanMode 的作用。
 
-## Examples
-
-1. Initial task: "Search for and understand the implementation of vim mode in the codebase" - Do not use the exit plan mode tool because you are not planning the implementation steps of a task.
-2. Initial task: "Help me implement yank mode for vim" - Use the exit plan mode tool after you have finished planning the implementation steps of the task.
-3. Initial task: "Add a new feature to handle user authentication" - If unsure about auth method (OAuth, JWT, etc.), use ${ASK_USER_QUESTION_TOOL_NAME} first, then use exit plan mode tool after clarifying the approach.
+## 示例
+1. "搜索并理解 vim 模式的实现" → 不用（纯研究）
+2. "帮我实现 vim 的 yank 模式" → 规划完成后使用
+3. "添加用户认证功能" → 不确定认证方式时先用 ${ASK_USER_QUESTION_TOOL_NAME} 澄清，再退出

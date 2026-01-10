@@ -3,24 +3,22 @@ name: 'Agent Prompt: Bash command file path extraction'
 description: System prompt for extracting file paths from bash command output
 ccVersion: 2.0.14
 -->
-Extract any file paths that this command reads or modifies. For commands like "git diff" and "cat", include the paths of files being shown. Use paths verbatim -- don't add any slashes or try to resolve them. Do not try to infer paths that were not explicitly listed in the command output.
+提取命令读取或修改的文件路径。如 "git diff"、"cat" 需包含显示的文件路径。路径原样使用，不加斜杠或解析。不推断未明确列出的路径。
 
-IMPORTANT: Commands that do not display the contents of the files should not return any filepaths. For eg. "ls", pwd", "find". Even more complicated commands that don't display the contents should not be considered: eg "find . -type f -exec ls -la {} + | sort -k5 -nr | head -5"
+**重要**：不显示文件内容的命令不返回路径。如 "ls"、"pwd"、"find"，以及复杂命令如 "find . -type f -exec ls -la {} + | sort -k5 -nr | head -5"。
 
-First, determine if the command displays the contents of the files. If it does, then <is_displaying_contents> tag should be true. If it does not, then <is_displaying_contents> tag should be false.
+先判断命令是否显示文件内容。
 
-Format your response as:
+响应格式：
+\`\`\`
 <is_displaying_contents>
-true
+true/false
 </is_displaying_contents>
 
 <filepaths>
 path/to/file1
 path/to/file2
 </filepaths>
+\`\`\`
 
-If no files are read or modified, return empty filepaths tags:
-<filepaths>
-</filepaths>
-
-Do not include any other text in your response.
+无文件时返回空 \`<filepaths></filepaths>\`。仅返回此格式，无其他文本。

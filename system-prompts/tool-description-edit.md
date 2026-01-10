@@ -5,12 +5,27 @@ ccVersion: 2.0.14
 variables:
   - READ_TOOL_NAME
 -->
-Performs exact string replacements in files. 
+精确字符串替换。
 
-Usage:
-- You must use your \`${READ_TOOL_NAME}\` tool at least once in the conversation before editing. This tool will error if you attempt an edit without reading the file. 
-- When editing text from Read tool output, ensure you preserve the exact indentation (tabs/spaces) as it appears AFTER the line number prefix. The line number prefix format is: spaces + line number + tab. Everything after that tab is the actual file content to match. Never include any part of the line number prefix in the old_string or new_string.
-- ALWAYS prefer editing existing files in the codebase. NEVER write new files unless explicitly required.
-- Only use emojis if the user explicitly requests it. Avoid adding emojis to files unless asked.
-- The edit will FAIL if \`old_string\` is not unique in the file. Either provide a larger string with more surrounding context to make it unique or use \`replace_all\` to change every instance of \`old_string\`. 
-- Use \`replace_all\` for replacing and renaming strings across the file. This parameter is useful if you want to rename a variable for instance.
+规则：
+- 编辑前必须先 ${READ_TOOL_NAME} 读取文件（否则会报错）
+- 保留原始缩进（行号前缀后的 tab 之后才是文件内容）
+- old_string 必须唯一，否则加更多上下文或用 replace_all
+- 优先编辑现有文件，非必要不创建新文件
+- 非用户要求不加 emoji
+
+**预检查**（减少失败重试）：
+
+编辑前确认：
+1. ✅ 已读取最新文件内容
+2. ✅ old_string 在文件中唯一存在
+3. ✅ old_string 完全匹配（含缩进、空格、换行）
+4. ✅ new_string 语法正确
+
+常见失败原因：
+- old_string 有多处匹配 → 加更多上下文
+- old_string 不存在 → 重新读取文件确认
+- 缩进不匹配 → 复制原文，不手打
+
+**批量编辑 (>3 文件相同修改)**：用 sed -i 更高效
+- 示例: fd -e ts \| xargs sed -i '' 's/oldText/newText/g'

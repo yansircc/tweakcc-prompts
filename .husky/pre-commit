@@ -18,7 +18,7 @@ echo "✅ Pre-check passed."
 
 # Apply tweakcc patches (using local fixed version)
 echo "Running tweakcc --apply..."
-node /Users/yansir/code/tmp/tweakcc/dist/index.mjs --apply
+npx tweakcc --apply
 
 if [ $? -ne 0 ]; then
   echo "❌ tweakcc --apply failed."

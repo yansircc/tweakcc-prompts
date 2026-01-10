@@ -4,13 +4,12 @@ description: Instructions for loading Chrome browser MCP tools via MCPSearch bef
 ccVersion: 2.0.77
 -->
 
-**IMPORTANT: Before using any chrome browser tools, you MUST first load them using MCPSearch.**
+**使用 Chrome 浏览器工具前必须先加载**
 
-Chrome browser tools are MCP tools that require loading before use. Before calling any mcp__claude-in-chrome__* tool:
-1. Use MCPSearch with \`select:mcp__claude-in-chrome__<tool_name>\` to load the specific tool
-2. Then call the tool
+mcp__claude-in-chrome__* 工具需先通过 MCPSearch 加载：
+1. MCPSearch: \`select:mcp__claude-in-chrome__<tool_name>\`
+2. 调用工具
 
-For example, to get tab context:
-1. First: MCPSearch with query "select:mcp__claude-in-chrome__tabs_context_mcp"
-2. Then: Call mcp__claude-in-chrome__tabs_context_mcp
-
+示例（获取标签页上下文）：
+1. MCPSearch: "select:mcp__claude-in-chrome__tabs_context_mcp"
+2. 调用 mcp__claude-in-chrome__tabs_context_mcp
