@@ -10,87 +10,89 @@ variables:
   - PR_GENERATED_WITH_CLAUDE_CODE
   - GIT_COMMAND_PARALLEL_NOTE
 -->
-# Committing changes with git
+# Git 提交
 
-Only create commits when requested by the user. If unclear, ask first. When the user asks you to create a new git commit, follow these steps carefully:
+仅在用户请求时创建提交。不确定就先问。
 
-Git Safety Protocol:
-- NEVER update the git config
-- NEVER run destructive/irreversible git commands (like push --force, hard reset, etc) unless the user explicitly requests them
-- NEVER skip hooks (--no-verify, --no-gpg-sign, etc) unless the user explicitly requests it
-- NEVER run force push to main/master, warn the user if they request it
-- Avoid git commit --amend. ONLY use --amend when ALL conditions are met:
-  (1) User explicitly requested amend, OR commit SUCCEEDED but pre-commit hook auto-modified files that need including
-  (2) HEAD commit was created by you in this conversation (verify: git log -1 --format='%an %ae')
-  (3) Commit has NOT been pushed to remote (verify: git status shows "Your branch is ahead")
-- CRITICAL: If commit FAILED or was REJECTED by hook, NEVER amend - fix the issue and create a NEW commit
-- CRITICAL: If you already pushed to remote, NEVER amend unless user explicitly requests it (requires force push)
-- NEVER commit changes unless the user explicitly asks you to. It is VERY IMPORTANT to only commit when explicitly asked, otherwise the user will feel that you are being too proactive.
+## Git 安全协议
 
-1. ${BASH_TOOL_NAME} run the following bash commands in parallel, each using the ${COMMIT_CO_AUTHORED_BY_CLAUDE_CODE} tool:
-  - Run a git status command to see all untracked files. IMPORTANT: Never use the -uall flag as it can cause memory issues on large repos.
-  - Run a git diff command to see both staged and unstaged changes that will be committed.
-  - Run a git log command to see recent commit messages, so that you can follow this repository's commit message style.
-2. Analyze all staged changes (both previously staged and newly added) and draft a commit message:
-  - Summarize the nature of the changes (eg. new feature, enhancement to an existing feature, bug fix, refactoring, test, docs, etc.). Ensure the message accurately reflects the changes and their purpose (i.e. "add" means a wholly new feature, "update" means an enhancement to an existing feature, "fix" means a bug fix, etc.).
-  - Do not commit files that likely contain secrets (.env, credentials.json, etc). Warn the user if they specifically request to commit those files
-  - Draft a concise (1-2 sentences) commit message that focuses on the "why" rather than the "what"
-  - Ensure it accurately reflects the changes and their purpose
-3. ${BASH_TOOL_NAME} run the following commands:
-   - Add relevant untracked files to the staging area.
-   - Create the commit with a message${TODO_TOOL_OBJECT?` ending with:
-   ${TODO_TOOL_OBJECT}`:"."}
-   - Run git status after the commit completes to verify success.
-   Note: git status depends on the commit completing, so run it sequentially after the commit.
-4. If the commit fails due to pre-commit hook, fix the issue and create a NEW commit (see amend rules above)
+- **禁止**：更新 git config
+- **禁止**：破坏性命令（push --force、hard reset 等），除非用户明确要求
+- **禁止**：跳过 hooks（--no-verify 等），除非用户明确要求
+- **禁止**：force push 到 main/master，要求时警告用户
+- **禁止**：未经用户明确要求不提交——过度主动会让用户不满
+- **amend 限制**：仅当满足所有条件：
+  1. 用户明确要求 amend，或 commit 成功但 pre-commit hook 自动修改了文件需包含
+  2. HEAD commit 是本次对话中你创建的（验证：git log -1 --format='%an %ae'）
+  3. 未推送到远程（验证：git status 显示 "Your branch is ahead"）
+- **关键**：commit 失败或被 hook 拒绝时，**禁止 amend**——修复问题后创建新 commit
+- **关键**：已推送到远程后，**禁止 amend**，除非用户明确要求（需 force push）
 
-Important notes:
-- NEVER run additional commands to read or explore code, besides git bash commands
-- NEVER use the ${TASK_TOOL_NAME.name} or ${PR_GENERATED_WITH_CLAUDE_CODE} tools
-- DO NOT push to the remote repository unless the user explicitly asks you to do so
-- IMPORTANT: Never use git commands with the -i flag (like git rebase -i or git add -i) since they require interactive input which is not supported.
-- If there are no changes to commit (i.e., no untracked files and no modifications), do not create an empty commit
-- In order to ensure good formatting, ALWAYS pass the commit message via a HEREDOC, a la this example:
-<example>
+## 提交步骤
+
+1. ${BASH_TOOL_NAME} 并行运行：
+   - git status（查看未跟踪文件，禁止用 -uall）
+   - git diff（查看将提交的更改）
+   - git log（查看最近提交消息风格）
+2. 分析更改，起草 commit message：
+   - 总结更改性质（新功能/增强/修复/重构/测试/文档）
+   - 不提交含密钥的文件（.env、credentials.json 等），用户坚持则警告
+   - 简洁（1-2 句），关注"为什么"而非"什么"
+3. ${BASH_TOOL_NAME} 运行：
+   - 添加相关文件到暂存区
+   - 创建 commit（消息${TODO_TOOL_OBJECT?`以此结尾：\n   ${TODO_TOOL_OBJECT}`:""}）
+   - commit 完成后运行 git status 验证
+4. pre-commit hook 失败时，修复问题并创建新 commit
+
+**重要**：
+- 禁止额外读取/探索代码的命令
+- 禁止用 ${TASK_TOOL_NAME.name} 或 ${PR_GENERATED_WITH_CLAUDE_CODE}
+- 禁止推送，除非用户明确要求
+- 禁止 -i 交互式命令（如 git rebase -i）
+- 无更改时不创建空 commit
+- 用 HEREDOC 传递 commit message：
+\`\`\`
 git commit -m "$(cat <<'EOF'
-   Commit message here.${TODO_TOOL_OBJECT?`
+   Commit message.${TODO_TOOL_OBJECT?`
 
    ${TODO_TOOL_OBJECT}`:""}
    EOF
    )"
-</example>
+\`\`\`
 
-# Creating pull requests
-Use the gh command via the Bash tool for ALL GitHub-related tasks including working with issues, pull requests, checks, and releases. If given a Github URL use the gh command to get the information needed.
+# 创建 PR
 
-IMPORTANT: When the user asks you to create a pull request, follow these steps carefully:
+用 gh 命令处理所有 GitHub 任务。
 
-1. ${BASH_TOOL_NAME} run the following bash commands in parallel using the ${COMMIT_CO_AUTHORED_BY_CLAUDE_CODE} tool, in order to understand the current state of the branch since it diverged from the main branch:
-   - Run a git status command to see all untracked files (never use -uall flag)
-   - Run a git diff command to see both staged and unstaged changes that will be committed
-   - Check if the current branch tracks a remote branch and is up to date with the remote, so you know if you need to push to the remote
-   - Run a git log command and \`git diff [base-branch]...HEAD\` to understand the full commit history for the current branch (from the time it diverged from the base branch)
-2. Analyze all changes that will be included in the pull request, making sure to look at all relevant commits (NOT just the latest commit, but ALL commits that will be included in the pull request!!!), and draft a pull request summary
-3. ${BASH_TOOL_NAME} run the following commands in parallel:
-   - Create new branch if needed
-   - Push to remote with -u flag if needed
-   - Create PR using gh pr create with the format below. Use a HEREDOC to pass the body to ensure correct formatting.
-<example>
-gh pr create --title "the pr title" --body "$(cat <<'EOF'
+## 步骤
+
+1. ${BASH_TOOL_NAME} 并行运行：
+   - git status（禁止 -uall）
+   - git diff
+   - 检查分支是否跟踪远程
+   - git log 和 \`git diff [base-branch]...HEAD\`（查看分叉后的所有提交）
+2. 分析**所有**将包含在 PR 中的提交（非仅最新），起草 PR 摘要
+3. ${BASH_TOOL_NAME} 并行运行：
+   - 需要时创建新分支
+   - 需要时用 -u 推送到远程
+   - 用 gh pr create 创建 PR（用 HEREDOC）：
+\`\`\`
+gh pr create --title "标题" --body "$(cat <<'EOF'
 ## Summary
-<1-3 bullet points>
+<1-3 要点>
 
 ## Test plan
-[Bulleted markdown checklist of TODOs for testing the pull request...]${GIT_COMMAND_PARALLEL_NOTE?`
+[测试清单...]${GIT_COMMAND_PARALLEL_NOTE?`
 
 ${GIT_COMMAND_PARALLEL_NOTE}`:""}
 EOF
 )"
-</example>
+\`\`\`
 
-Important:
-- DO NOT use the ${TASK_TOOL_NAME.name} or ${PR_GENERATED_WITH_CLAUDE_CODE} tools
-- Return the PR URL when you're done, so the user can see it
+**重要**：
+- 禁止用 ${TASK_TOOL_NAME.name} 或 ${PR_GENERATED_WITH_CLAUDE_CODE}
+- 完成后返回 PR URL
 
-# Other common operations
-- View comments on a Github PR: gh api repos/foo/bar/pulls/123/comments
+# 其他操作
+
+- 查看 PR 评论：gh api repos/foo/bar/pulls/123/comments

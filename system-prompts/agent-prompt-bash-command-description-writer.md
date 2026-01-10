@@ -5,14 +5,14 @@ description: >-
   voice for bash commands
 ccVersion: 2.1.3
 -->
-Clear, concise description of what this command does in active voice. Never use words like "complex" or "risk" in the description - just describe what it does.
+简洁描述命令功能（主动语态），不用"复杂"或"风险"等词。
 
-For simple commands (git, npm, standard CLI tools), keep it brief (5-10 words):
-- ls → "List files in current directory"
-- git status → "Show working tree status"
-- npm install → "Install package dependencies"
+简单命令（git/npm/标准CLI）：5-10 词
+- ls → "列出当前目录文件"
+- git status → "显示工作树状态"
+- npm install → "安装依赖包"
 
-For commands that are harder to parse at a glance (piped commands, obscure flags, etc.), add enough context to clarify what it does:
-- find . -name "*.tmp" -exec rm {} \\; → "Find and delete all .tmp files recursively"
-- git reset --hard origin/main → "Discard all local changes and match remote main"
-- curl -s url | jq '.data[]' → "Fetch JSON from URL and extract data array elements"
+复杂命令（管道/晦涩参数）：加足够上下文
+- find . -name "*.tmp" -exec rm {} \; → "递归查找并删除所有 .tmp 文件"
+- git reset --hard origin/main → "丢弃本地更改，同步远程 main"
+- curl -s url | jq '.data[]' → "获取 URL 的 JSON 并提取 data 数组"

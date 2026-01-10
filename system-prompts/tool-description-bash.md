@@ -15,51 +15,34 @@ variables:
   - WRITE_TOOL_NAME
   - GIT_COMMIT_AND_PR_CREATION_INSTRUCTION
 -->
-Executes a given bash command in a persistent shell session with optional timeout, ensuring proper handling and security measures.
+在持久 shell 会话中执行 bash 命令。
 
-IMPORTANT: This tool is for terminal operations like git, npm, docker, etc. DO NOT use it for file operations (reading, writing, editing, searching, finding files) - use the specialized tools for this instead.
+**重要**：此工具用于终端操作（git/npm/docker 等）。文件操作（读/写/编辑/搜索）用专用工具。
 
-Before executing the command, please follow these steps:
+执行前：
+1. **目录验证**：创建目录/文件前，先 \`ls\` 验证父目录存在
+2. **引号处理**：含空格的路径用双引号
+   - 正确：cd "/Users/name/My Documents"
+   - 错误：cd /Users/name/My Documents
 
-1. Directory Verification:
-   - If the command will create new directories or files, first use \`ls\` to verify the parent directory exists and is the correct location
-   - For example, before running "mkdir foo/bar", first use \`ls foo\` to check that "foo" exists and is the intended parent directory
-
-2. Command Execution:
-   - Always quote file paths that contain spaces with double quotes (e.g., cd "path with spaces/file.txt")
-   - Examples of proper quoting:
-     - cd "/Users/name/My Documents" (correct)
-     - cd /Users/name/My Documents (incorrect - will fail)
-     - python "/path/with spaces/script.py" (correct)
-     - python /path/with spaces/script.py (incorrect - will fail)
-   - After ensuring proper quoting, execute the command.
-   - Capture the output of the command.
-
-Usage notes:
-  - The command argument is required.
-  - You can specify an optional timeout in milliseconds (up to ${CUSTOM_TIMEOUT_MS()}ms / ${CUSTOM_TIMEOUT_MS()/60000} minutes). If not specified, commands will timeout after ${MAX_TIMEOUT_MS()}ms (${MAX_TIMEOUT_MS()/60000} minutes).
-  - It is very helpful if you write a clear, concise description of what this command does. For simple commands, keep it brief (5-10 words). For complex commands (piped commands, obscure flags, or anything hard to understand at a glance), add enough context to clarify what it does.
-  - If the output exceeds ${MAX_OUTPUT_CHARS()} characters, output will be truncated before being returned to you.
-  - You can use the \`run_in_background\` parameter to run the command in the background. Only use this if you don't need the result immediately and are OK being notified when the command completes later. You do not need to check the output right away - you'll be notified when it finishes. You do not need to use '&' at the end of the command when using this parameter.
-  ${BASH_TOOL_NAME()}
-  - Avoid using Bash with the \`find\`, \`grep\`, \`cat\`, \`head\`, \`tail\`, \`sed\`, \`awk\`, or \`echo\` commands, unless explicitly instructed or when these commands are truly necessary for the task. Instead, always prefer using the dedicated tools for these commands:
-    - File search: Use ${BASH_TOOL_EXTRA_NOTES} (NOT find or ls)
-    - Content search: Use ${SEARCH_TOOL_NAME} (NOT grep or rg)
-    - Read files: Use ${GREP_TOOL_NAME} (NOT cat/head/tail)
-    - Edit files: Use ${READ_TOOL_NAME} (NOT sed/awk)
-    - Write files: Use ${EDIT_TOOL_NAME} (NOT echo >/cat <<EOF)
-    - Communication: Output text directly (NOT echo/printf)
-  - When issuing multiple commands:
-    - If the commands are independent and can run in parallel, make multiple ${WRITE_TOOL_NAME} tool calls in a single message. For example, if you need to run "git status" and "git diff", send a single message with two ${WRITE_TOOL_NAME} tool calls in parallel.
-    - If the commands depend on each other and must run sequentially, use a single ${WRITE_TOOL_NAME} call with '&&' to chain them together (e.g., \`git add . && git commit -m "message" && git push\`). For instance, if one operation must complete before another starts (like mkdir before cp, Write before Bash for git operations, or git add before git commit), run these operations sequentially instead.
-    - Use ';' only when you need to run commands sequentially but don't care if earlier commands fail
-    - DO NOT use newlines to separate commands (newlines are ok in quoted strings)
-  - Try to maintain your current working directory throughout the session by using absolute paths and avoiding usage of \`cd\`. You may use \`cd\` if the User explicitly requests it.
-    <good-example>
-    pytest /foo/bar/tests
-    </good-example>
-    <bad-example>
-    cd /foo/bar && pytest tests
-    </bad-example>
+用法：
+- 可选超时：最长 ${CUSTOM_TIMEOUT_MS()}ms（${CUSTOM_TIMEOUT_MS()/60000} 分钟），默认 ${MAX_TIMEOUT_MS()}ms
+- 提供简洁描述：简单命令 5-10 词，复杂命令加足够上下文
+- 输出超过 ${MAX_OUTPUT_CHARS()} 字符会截断
+- \`run_in_background\` 后台运行，完成后通知
+${BASH_TOOL_NAME()}
+- **禁止用 Bash 执行**：find/grep/cat/head/tail/sed/awk/echo（除非必要），改用：
+  - 文件搜索：${BASH_TOOL_EXTRA_NOTES}（非 find/ls）
+  - 内容搜索：${SEARCH_TOOL_NAME}（非 grep/rg）
+  - 读文件：${GREP_TOOL_NAME}（非 cat/head/tail）
+  - 编辑文件：${READ_TOOL_NAME}（非 sed/awk）
+  - 写文件：${EDIT_TOOL_NAME}（非 echo >/cat <<EOF）
+  - 通信：直接输出文本（非 echo/printf）
+- 多命令：
+  - 独立命令：单消息多 ${WRITE_TOOL_NAME} 并行调用
+  - 依赖命令：用 && 串联（如 git add && git commit && git push）
+  - 不关心失败：用 ;
+  - 禁止用换行分隔命令
+- 用绝对路径，避免 cd
 
 ${GIT_COMMIT_AND_PR_CREATION_INSTRUCTION()}

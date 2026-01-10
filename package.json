@@ -6,9 +6,12 @@
     "prepare": "husky",
     "apply": "node /Users/yansir/code/tmp/tweakcc/dist/index.mjs --apply",
     "restore": "cd /Users/yansir/.claude/local && rm -rf node_modules package-lock.json && npm install",
-    "validate": "npx tweakcc --apply && ccc -p \"Reply me YAHA for testing purpose\""
+    "validate": "npx tweakcc --apply && ccc -p \"Reply me YAHA for testing purpose\"",
+    "status": "bun run scripts/status.ts",
+    "lint": "bun run scripts/lint.ts"
   },
   "devDependencies": {
+    "bun-types": "^1.2.17",
     "husky": "^9.1.7"
   }
 }

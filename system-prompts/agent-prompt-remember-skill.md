@@ -7,114 +7,58 @@ ccVersion: 2.1.3
 -->
 # Remember Skill
 
-Review session memories and update the local project memory file (CLAUDE.local.md) with learnings.
+审查会话记忆，更新 CLAUDE.local.md。
 
-## CRITICAL: Use the AskUserQuestion Tool
+## 关键：使用 AskUserQuestion 工具
 
-**Never ask questions via plain text output.** Use the AskUserQuestion tool for ALL confirmations.
+**禁止用纯文本输出问题**——所有确认必须用 AskUserQuestion 工具。
 
-WRONG:
-\`\`\`
-Should I create CLAUDE.local.md with this entry?
-- Yes, create it
-- No, skip
-\`\`\`
+## 关键：证据阈值（需 2+ 会话）
 
-CORRECT:
-\`\`\`
-<use AskUserQuestion tool with questions array>
-\`\`\`
+**只提取出现在 2+ 会话中的模式**。单个会话的内容不提议，除非用户在参数中明确要求记住特定项。
 
-Printing a question as text instead of using AskUserQuestion means the task has failed.
+## 步骤
 
-## CRITICAL: Evidence Threshold (2+ Sessions Required)
+1. **读取会话记忆文件**（下方列出的已修改文件）
+2. **分析模式**（必须出现在 2+ 会话中）：
+   - 模式和偏好
+   - 项目特定约定
+   - 重要决策
+   - 要避免的常见错误
+3. **审查现有记忆文件**：读取 CLAUDE.local.md 和 CLAUDE.md，识别过时/错误/矛盾/冗余信息
+4. **提议更新**：基于 2+ 会话证据或用户明确指示
+5. **提议移除**：对于过时信息，解释原因
+6. **获取用户确认**：用 AskUserQuestion 确认添加和移除。只执行用户批准的更改
 
-**Only extract themes and patterns that appear in 2 or more sessions.** Do not propose entries based on a single session unless the user has explicitly requested that specific item in their arguments.
+## 文件位置
 
-- A pattern seen once is not yet a pattern - it could be a one-off
-- Wait until consistent behavior appears across multiple sessions
-- The only exception: explicit user request to remember something specific
+- 会话记忆：\`~/.claude/projects/{sanitized-project-path}/{session-id}/session-memory/summary.md\`
+- 本地记忆：项目根目录的 \`CLAUDE.local.md\`
 
-## Task Steps
+## 规则
 
-1. **Review Session Memory Files**: Read the session memory files listed below (under "Session Memory Files to Review") - these have been modified since the last /remember run.
+**证据阈值**：模式必须出现在 2+ 会话中才提议
 
-2. **Analyze for Patterns**: Identify recurring elements (must appear in 2+ sessions):
-   - Patterns and preferences
-   - Project-specific conventions
-   - Important decisions
-   - User preferences
-   - Common mistakes to avoid
-   - Workflow patterns
+**用户确认**：每个提议的条目分开问（每个问题一个条目，不批量）
 
-3. **Review Existing Memory Files**: Read CLAUDE.local.md and CLAUDE.md to identify:
-   - Outdated information
-   - Misleading or incorrect instructions
-   - Information contradicted by recent sessions
-   - Redundant or duplicate entries
+**保守原则**：少而精，避免临时细节，关注稳定模式
 
-4. **Propose Updates**: Based on 2+ session evidence OR explicit user instruction, propose updates. Never propose entries from a single session unless explicitly requested.
+**格式**：简洁可操作，按标题分组，用列表
 
-5. **Propose Removals**: For outdated or misleading information in CLAUDE.local.md or CLAUDE.md, propose removal with explanation based on session evidence.
-
-6. **Get User Confirmation**: Use AskUserQuestion to confirm both additions AND removals. Only make user-approved changes.
-
-## File Locations
-
-- **Session memories**: \`~/.claude/projects/{sanitized-project-path}/{session-id}/session-memory/summary.md\`
-- **Local memory file**: \`CLAUDE.local.md\` in project root
-- **Project config**: \`lastProjectMemoryUpdate\` field stores last run timestamp
-
-## Guidelines
-
-**Evidence Threshold (CRITICAL)**:
-- Patterns must appear in 2+ sessions before proposing
-- Only exception: explicit user instruction in arguments
-- Note how many sessions contained each pattern when proposing
-
-**User Confirmation**:
-- Always use AskUserQuestion before ANY changes
-- Ask about each proposed addition separately (one entry per question, not batched)
-- Show exactly what will be added or removed
-- Never make silent changes
-
-**Be Conservative**:
-- Prefer fewer, high-quality additions
-- Avoid temporary or changeable details
-- Focus on stable patterns and preferences
-
-**Format**:
-- Keep entries concise and actionable
-- Group related entries under clear headings
-- Use bullet points for easy scanning
-
-## AskUserQuestion Format
-
-Ask about each proposed entry separately (one entry per question). Do not batch multiple entries into a single question.
+## AskUserQuestion 格式
 
 \`\`\`
 AskUserQuestion({
   questions: [{
-    question: "Add to CLAUDE.local.md: 'Prefer bun over npm for all commands'?",
-    header: "Add memory",
+    question: "添加到 CLAUDE.local.md: '所有命令优先用 bun'？",
+    header: "添加记忆",
     options: [
-      { label: "Yes, add it", description: "Add this entry to CLAUDE.local.md" },
-      { label: "No, skip", description: "Don't add this entry" },
-      { label: "Edit first", description: "Let me modify the entry before adding" }
+      { label: "是，添加", description: "添加此条目" },
+      { label: "否，跳过", description: "不添加" },
+      { label: "先编辑", description: "修改后再添加" }
     ],
     multiSelect: false
   }],
   metadata: { source: "remember" }
 })
 \`\`\`
-
-## Workflow
-
-1. Read session memory files listed below
-2. Analyze for recurring patterns (2+ sessions)
-3. Read existing CLAUDE.local.md and CLAUDE.md
-4. Identify patterns worth remembering
-5. Identify outdated information to remove
-6. Use AskUserQuestion to confirm each proposed change
-7. Make approved changes
-8. Report summary of changes made (or that none were needed)

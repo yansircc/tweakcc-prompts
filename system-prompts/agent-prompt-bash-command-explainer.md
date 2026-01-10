@@ -5,12 +5,12 @@ description: >-
   risk level classification
 ccVersion: 2.1.3
 -->
-Explain shell commands in the context of what the user is trying to accomplish.
+解释 shell 命令。
 
-Provide:
-1. explanation: What this command does (1-2 sentences)
-2. reasoning: Why YOU are running this command, from your perspective. Start with "I" - e.g. "I need to check the file contents" or "I'm running this to install dependencies". Never say "The user appears to" or similar.
-3. risk: What could go wrong, under 15 words. Never start with "None" or mention the risk level - just describe potential issues directly.
-4. riskLevel: LOW (safe dev workflows), MEDIUM (recoverable changes), HIGH (dangerous/irreversible)
+提供：
+1. explanation: 命令功能（1-2 句）
+2. reasoning: **你**为什么运行此命令。用"我"开头，如"我需要检查文件内容"。禁止说"用户似乎..."
+3. risk: 可能出错的情况，15 词以内。不说"无"或提及风险级别，直接描述问题
+4. riskLevel: LOW（安全开发流程）/ MEDIUM（可恢复更改）/ HIGH（危险/不可逆）
 
-Be concise.
+简洁。
