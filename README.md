@@ -1,32 +1,14 @@
-# Claude Code 高性能补丁
+# Tweakcc 中文优化补丁
 
-> 优化提示词 + MCP 工具，让 Claude 自动选择高效策略。
+> Claude Code 提示词汉化 + 性能优化
 
-## 两大优化
+## 状态
 
-### 1. 提示词优化
-
-- **高性能 CLI** - `fd` 替代 `find`，`ast-grep` 替代 `grep`
-- **Token 节省** - 限制输出长度，减少 40%
-- **结构化输出** - 便于解析，效率 +50%
-- **智能工具选择** - LSP > ast-grep > Grep，调用 -50%
-- **Subagent 委托** - 保护主上下文
-
-### 2. MCP 批量工具
-
-| 工具 | 功能 |
-|------|------|
-| `batch_edit` | 批量替换，支持 dry_run |
-| `batch_read` | 批量读取多文件 |
-| `project_scan` | 项目概览扫描 |
-
-## 收益
-
-| 指标 | 提升 |
-|------|------|
-| Token 消耗 | -40% |
-| 工具调用 | -50% |
-| 文件搜索速度 | 5-10x |
+```bash
+bun run check          # 查看汉化状态
+bun run check --json   # JSON 输出
+bun run validate       # 验证是否正常
+```
 
 ## 安装
 
@@ -71,37 +53,69 @@ cd ~/.claude/mcp-servers/batch-tools && npm install && npm run build
 }
 ```
 
-### 更新后重新应用
+## 优化内容
+
+### 提示词优化
+
+- **汉化** - 59/66 文件已翻译，核心提示词全覆盖
+- **精简** - 不损失信息，节省 token
+- **高性能 CLI** - `fd` 替代 `find`，`ast-grep` 替代 `grep`
+- **智能工具选择** - LSP > ast-grep > Grep
+
+### MCP 批量工具
+
+| 工具 | 功能 |
+|------|------|
+| `batch_edit` | 批量替换，支持 dry_run |
+| `batch_read` | 批量读取多文件 |
+| `project_scan` | 项目概览扫描 |
+
+## 辅助命令
+
+| 命令 | 用途 |
+|------|------|
+| `bun run check` | 查看文件状态 |
+| `bun run check --json` | JSON 输出 |
+| `bun run validate` | 验证修改 |
+| `bun run restore` | 恢复 Claude Code |
+
+## 汉化指南
+
+### 文件分类
+
+| 分类 | 含义 | 操作 |
+|------|------|------|
+| ✅ translated | 已翻译 | 无需处理 |
+| 📝 translatable | 可直接翻译 | 安全翻译 |
+| ⚠️ careful | 含嵌套模板 | 保持语法结构 |
+| 🔀 keep | GitHub/混合/低价值 | 不翻译 |
+
+### 翻译规则
+
+1. **保留 frontmatter** - `<!--` 到 `-->` 不改
+2. **保留变量** - 所有 `${...}` 保持原样
+3. **保留转义** - `\`\`\`` 保持原样
+4. **嵌套模板** - 保持 `${condition ? \`text\` : \`text\`}` 结构
+
+### 验证流程
 
 ```bash
-npx tweakcc --apply
+# 修改前备份
+cp system-prompts/xxx.md system-prompts/xxx.md.bak
+
+# 编辑后验证
+bun run validate
+
+# 失败时恢复
+cp system-prompts/xxx.md.bak system-prompts/xxx.md
 ```
-
-## 工具选择优先级
-
-```
-MCP 工具 > 专用工具 > Shell 命令
-
-查找代码 →
-  ├─ 已知位置 → Read
-  ├─ 定义/引用 → LSP（最精准）
-  ├─ 代码结构 → ast-grep
-  ├─ 关键词 → Grep
-  └─ 探索代码库 → Task subagent
-```
-
-| 场景 | 首选 | 备选 |
-|------|------|------|
-| 项目概览 | `project_scan` | tokei |
-| 批量读取 | `batch_read` | xargs |
-| 批量替换 | `batch_edit` | sed |
-| 找定义/引用 | LSP | ast-grep |
-| 找代码结构 | ast-grep | Grep |
 
 ## 项目结构
 
 ```
 ├── system-prompts/    # 优化后的提示词
+├── scripts/
+│   └── check.ts       # 状态检查工具
 └── mcp-servers/       # MCP 服务器
     └── batch-tools/
 ```
@@ -110,6 +124,5 @@ MCP 工具 > 专用工具 > Shell 命令
 
 - [tweakcc](https://github.com/Piebald-AI/tweakcc)
 - [fd](https://github.com/sharkdp/fd) / [ast-grep](https://github.com/ast-grep/ast-grep) / [ripgrep](https://github.com/BurntSushi/ripgrep)
-- [MCP Protocol](https://modelcontextprotocol.io/)
 
 MIT
