@@ -1,7 +1,10 @@
 <!--
-name: 'Tool Description: MCPSearch'
-description: Tool description for the MCPSearch tool
+name: 'Tool Description: MCPSearch (with available tools)'
+description: Tool description for the MCPSearch tool with available tools listed
 ccVersion: 2.0.70
+variables:
+  - TOOLS
+  - TOOL
 -->
 Search for or select MCP tools to make them available for use.
 
@@ -52,3 +55,7 @@ User: Read my slack messages
 Assistant: [Directly calls mcp__slack__read_channel without loading it first]
 WRONG - You must load the tool FIRST using this tool
 </bad-example>
+
+Available MCP tools (must be loaded before use):
+${TOOLS.map((TOOL)=>TOOL.name).join(`
+`)}

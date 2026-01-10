@@ -5,20 +5,11 @@ ccVersion: 2.0.14
 variables:
   - READ_TOOL_NAME
 -->
-写文件到本地（会覆盖）。
+Writes a file to the local filesystem.
 
-规则：
-- 现有文件必须先 ${READ_TOOL_NAME} 读取（否则会失败）
-- 优先编辑现有文件，非必要不创建新文件
-- 非用户要求不创建文档文件（*.md/README）
-- 非用户要求不加 emoji
-
-**预检查**（减少失败）：
-
-写入前确认：
-1. ✅ 新文件：父目录存在
-2. ✅ 现有文件：已读取最新内容
-3. ✅ 内容完整：不遗漏原有代码
-4. ✅ 语法正确：不引入错误
-
-**优先用 Edit**：修改现有文件时，Edit 比 Write 更安全（不会意外覆盖）。
+Usage:
+- This tool will overwrite the existing file if there is one at the provided path.
+- If this is an existing file, you MUST use the ${READ_TOOL_NAME} tool first to read the file's contents. This tool will fail if you did not read the file first.
+- ALWAYS prefer editing existing files in the codebase. NEVER write new files unless explicitly required.
+- NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
+- Only use emojis if the user explicitly requests it. Avoid writing emojis to files unless asked.

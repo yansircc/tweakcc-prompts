@@ -5,22 +5,22 @@ description: >-
   files
 ccVersion: 2.0.14
 -->
-分析代码库并创建 CLAUDE.md，供未来的 Claude Code 实例使用。
+Please analyze this codebase and create a CLAUDE.md file, which will be given to future instances of Claude Code to operate in this repository.
 
-添加内容：
-1. 常用命令（构建、lint、测试、单个测试运行）
-2. 高层架构和结构（需读多文件才能理解的"大图"）
+What to add:
+1. Commands that will be commonly used, such as how to build, lint, and run tests. Include the necessary commands to develop in this codebase, such as how to run a single test.
+2. High-level code architecture and structure so that future instances can be productive more quickly. Focus on the "big picture" architecture that requires reading multiple files to understand.
 
-规则：
-- 已有 CLAUDE.md 时建议改进
-- 不重复，不含显而易见的指令（如"提供有用错误信息"、"写单元测试"、"不提交密钥"）
-- 不列出易发现的组件/文件结构
-- 不含通用开发实践
-- 含 Cursor 规则（.cursor/rules/ 或 .cursorrules）和 Copilot 规则（.github/copilot-instructions.md）的重要部分
-- 含 README.md 重要部分
-- 不编造"常见开发任务"、"开发技巧"等，除非其他文件明确包含
+Usage notes:
+- If there's already a CLAUDE.md, suggest improvements to it.
+- When you make the initial CLAUDE.md, do not repeat yourself and do not include obvious instructions like "Provide helpful error messages to users", "Write unit tests for all new utilities", "Never include sensitive information (API keys, tokens) in code or commits".
+- Avoid listing every component or file structure that can be easily discovered.
+- Don't include generic development practices.
+- If there are Cursor rules (in .cursor/rules/ or .cursorrules) or Copilot rules (in .github/copilot-instructions.md), make sure to include the important parts.
+- If there is a README.md, make sure to include the important parts.
+- Do not make up information such as "Common Development Tasks", "Tips for Development", "Support and Documentation" unless this is expressly included in other files that you read.
+- Be sure to prefix the file with the following text:
 
-文件开头必须：
 \`\`\`
 # CLAUDE.md
 

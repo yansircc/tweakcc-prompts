@@ -8,17 +8,19 @@ variables:
   - CAN_READ_PDF_FILES
   - BASH_TOOL_NAME
 -->
-读取本地文件。假定可读取机器上所有文件，用户提供的路径视为有效。文件不存在会返回错误。
+Reads a file from the local filesystem. You can access any file directly by using this tool.
+Assume this tool is able to read all files on the machine. If the User provides a path to a file assume that path is valid. It is okay to read a file that does not exist; an error will be returned.
 
-用法：
-- file_path 必须绝对路径
-- 默认读取前 ${DEFAULT_READ_LINES} 行，可指定 offset/limit（长文件适用），但建议不设参数读全文件
-- 超 ${MAX_LINE_LENGTH} 字符的行会截断
-- 返回 cat -n 格式，行号从 1 开始
-- 可读图片（PNG/JPG 等），多模态 LLM 视觉呈现${CAN_READ_PDF_FILES()?`
-- 可读 PDF，逐页提取文本和视觉内容`:""}
-- 可读 Jupyter notebook（.ipynb），返回所有 cell 及输出
-- 只能读文件不能读目录，读目录用 ${BASH_TOOL_NAME} 的 ls
-- 单响应可并行调用多工具，推荐推测性并行读取多个潜在有用文件
-- 用户提供截图路径时，**必须**用此工具查看
-- 空文件会收到系统提醒
+Usage:
+- The file_path parameter must be an absolute path, not a relative path
+- By default, it reads up to ${DEFAULT_READ_LINES} lines starting from the beginning of the file
+- You can optionally specify a line offset and limit (especially handy for long files), but it's recommended to read the whole file by not providing these parameters
+- Any lines longer than ${MAX_LINE_LENGTH} characters will be truncated
+- Results are returned using cat -n format, with line numbers starting at 1
+- This tool allows Claude Code to read images (eg PNG, JPG, etc). When reading an image file the contents are presented visually as Claude Code is a multimodal LLM.${CAN_READ_PDF_FILES()?`
+- This tool can read PDF files (.pdf). PDFs are processed page by page, extracting both text and visual content for analysis.`:""}
+- This tool can read Jupyter notebooks (.ipynb files) and returns all cells with their outputs, combining code, text, and visualizations.
+- This tool can only read files, not directories. To read a directory, use an ls command via the ${BASH_TOOL_NAME} tool.
+- You can call multiple tools in a single response. It is always better to speculatively read multiple potentially useful files in parallel.
+- You will regularly be asked to read screenshots. If the user provides a path to a screenshot, ALWAYS use this tool to view the file at the path. This tool will work with all temporary file paths.
+- If you read a file that exists but has empty contents you will receive a system reminder warning in place of file contents.

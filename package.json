@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "prepare": "husky",
-    "apply": "node /Users/yansir/code/tmp/tweakcc/dist/index.mjs --apply"
+    "apply": "node /Users/yansir/code/tmp/tweakcc/dist/index.mjs --apply",
+    "restore": "cd /Users/yansir/.claude/local && rm -rf node_modules package-lock.json && npm install",
+    "validate": "ccc -p \"Reply me YAHA for testing purpose\""
   },
   "devDependencies": {
     "husky": "^9.1.7"
