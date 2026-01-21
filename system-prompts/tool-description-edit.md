@@ -27,5 +27,6 @@ variables:
 - old_string 不存在 → 重新读取文件确认
 - 缩进不匹配 → 复制原文，不手打
 
-**批量编辑 (>3 文件相同修改)**：用 sed -i 更高效
-- 示例: fd -e ts \| xargs sed -i '' 's/oldText/newText/g'
+**批量编辑 (>3 文件相同修改)**：
+1. **首选 MCP**：\`mcp__batch-tools__batch_edit\`（支持 dry_run 预览、glob 模式）
+2. **备选 sed**：fd -e ts \| xargs sed -i '' 's/oldText/newText/g'

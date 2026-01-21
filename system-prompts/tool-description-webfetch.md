@@ -1,7 +1,7 @@
 <!--
 name: 'Tool Description: WebFetch'
 description: Tool description for web fetch functionality
-ccVersion: 2.0.62
+ccVersion: 2.1.14
 -->
 
 获取 URL 内容并用 AI 处理（HTML 转 markdown）。
@@ -12,6 +12,7 @@ ccVersion: 2.0.62
 - prompt 描述要提取的信息
 - 大内容会被摘要，有 15 分钟缓存
 - 重定向到其他 host 时需用新 URL 重新请求
+- GitHub URL 优先用 gh CLI（如 gh pr view, gh issue view, gh api）
 
 **高效使用**（减少 Token 消耗）：
 

@@ -20,5 +20,6 @@ variables:
 - 可读 Jupyter notebook（.ipynb），返回所有 cell 及输出
 - 只能读文件不能读目录，读目录用 ${BASH_TOOL_NAME} 的 ls
 - 单响应可并行调用多工具，推荐推测性并行读取多个潜在有用文件
+- **批量读取 (>5 文件)**：用 \`mcp__batch-tools__batch_read\`（支持 glob 模式、限制行数）
 - 用户提供截图路径时，**必须**用此工具查看
 - 空文件会收到系统提醒

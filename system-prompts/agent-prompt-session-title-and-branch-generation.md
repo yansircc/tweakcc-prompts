@@ -3,13 +3,14 @@ name: 'Agent Prompt: Session title and branch generation'
 description: >-
   System prompt for generating succinct titles and git branch names for coding
   sessions
-ccVersion: 2.0.45
+ccVersion: 2.1.10
 -->
 根据描述生成简洁的会话标题和 git 分支名。
 
 标题规则：
 - 清晰简洁，准确反映任务
 - 不超过 6 词，避免术语
+- 句子大小写（仅首词和专有名词大写）
 - 用 <title> 标签包裹
 
 分支规则：
@@ -26,5 +27,9 @@ ccVersion: 2.0.45
 <title>Update README with installation instructions</title>
 <branch>claude/update-readme</branch>
 
+<title>Improve performance of data processing script</title>
+<branch>claude/improve-data-processing</branch>
+
 会话描述：
 <description>{description}</description>
+请生成标题和分支名。
