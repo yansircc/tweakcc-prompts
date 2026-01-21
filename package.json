@@ -6,7 +6,7 @@
     "prepare": "husky",
     "apply": "npx tweakcc --apply",
     "restore": "bun run scripts/restore.ts",
-    "validate": "npx tweakcc --apply && ccc --model claude-haiku-4-5-20251001 -p \"Reply me 'I'm fine' for testing purpose\"",
+    "validate": "ccc --model claude-haiku-4-5-20251001 -p \"Reply me 'I'm fine' for testing purpose\"",
     "check": "bun run scripts/check.ts",
     "check:json": "bun run scripts/check.ts --json"
   },
