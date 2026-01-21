@@ -77,7 +77,7 @@ cd ~/.claude/mcp-servers/batch-tools && npm install && npm run build
 | `bun run check` | 查看文件状态 |
 | `bun run check --json` | JSON 输出 |
 | `bun run validate` | 验证修改 |
-| `bun run restore` | 恢复 Claude Code |
+| `bun run restore` | 恢复 Claude Code（自动检测安装位置） |
 
 ## 汉化指南
 
@@ -115,7 +115,8 @@ cp system-prompts/xxx.md.bak system-prompts/xxx.md
 ```
 ├── system-prompts/    # 优化后的提示词
 ├── scripts/
-│   └── check.ts       # 状态检查工具
+│   ├── check.ts       # 状态检查工具
+│   └── restore.ts     # 恢复官方版本
 └── mcp-servers/       # MCP 服务器
     └── batch-tools/
 ```

@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "prepare": "husky",
-    "apply": "node /Users/yansir/code/tmp/tweakcc/dist/index.mjs --apply",
-    "restore": "cd /Users/yansir/.claude/local && rm -rf node_modules package-lock.json && npm install",
-    "validate": "npx tweakcc --apply && ccc -p \"Reply me YAHA for testing purpose\"",
+    "apply": "npx tweakcc --apply",
+    "restore": "bun run scripts/restore.ts",
+    "validate": "npx tweakcc --apply && ccc --model claude-haiku-4-5-20251001 -p \"Reply me 'I'm fine' for testing purpose\"",
     "check": "bun run scripts/check.ts",
     "check:json": "bun run scripts/check.ts --json"
   },
