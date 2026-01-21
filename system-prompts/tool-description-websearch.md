@@ -21,6 +21,6 @@ Sources:
 - 支持域名过滤（include/block）
 - 仅限美国可用
 
-**重要**：搜索时用正确年份。今天是 ${GET_CURRENT_DATE_FN()}。
+**重要**：必须使用英文搜索。搜索时用正确年份。今天是 ${GET_CURRENT_DATE_FN()}。
 - 正确：用户问"最新 React 文档" → 搜索 "React documentation ${CURRENT_YEAR}"
 - 错误：搜索 "React documentation ${CURRENT_YEAR-1}"
